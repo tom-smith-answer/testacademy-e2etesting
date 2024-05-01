@@ -19,5 +19,5 @@ declare global {
             }
         }
     })
-    return cy.get(`[placeholder="${input}"]`)
+    cy.get(`[placeholder="${input}"]`)
  }) 
