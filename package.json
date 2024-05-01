@@ -14,10 +14,6 @@
     "test:unit": "vitest run",
     "generate:api": "curl -sL https://raw.githubusercontent.com/gothinkster/realworld/main/api/openapi.yml -o ./src/services/openapi.yml && sta -p ./src/services/openapi.yml -o ./src/services -n api.ts"
   },
-  "simple-git-hooks": {
-    "pre-commit": "npm exec lint-staged",
-    "pre-push": "npm run lint && npm run build"
-  },
   "lint-staged": {
     "*": "eslint --fix"
   },
