@@ -20,5 +20,9 @@ export default defineConfig({
   },
   ignores: [
     'src/services/api.ts',
+    'cypress.config.ts',
+    'cypress/e2e/spec.cy.ts',
+    'cypress/support/commands/getByPlaceholder.ts',
+    'cypress/support/e2e.ts',
   ],
 })
