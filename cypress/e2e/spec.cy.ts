@@ -5,12 +5,7 @@ describe('Conduit test framework', () => {
 
         cy.get(':nth-child(2) > .nav-link')
         .click()
-
-        cy.getByPlaceholder('Email')
-        .type('tom.smith@answerdigital.com')
-        cy.getByPlaceholder('Password')
-        .type('password')
-        cy.get('.btn').click()
+        cy.signIn('tom.smith@answerdigital.com', 'password')
 
         cy.url().should('eq', `${Cypress.config('baseUrl')}#/`)
     })
@@ -19,13 +14,8 @@ describe('Conduit test framework', () => {
         cy.visit('/')
 
         cy.get(':nth-child(2) > .nav-link')
-        .click()
-
-        cy.getByPlaceholder('Email')
-        .type('john.smith@answerdigital.com')
-        cy.getByPlaceholder('Password')
-        .type('passcode')
-        cy.get('.btn').click()
+        .click() 
+        cy.signIn('john.smith@answerdigital.com', 'wrongpass')
 
         cy.url().should('eq', `${Cypress.config('baseUrl')}#/login`)
         cy.get('.error-messages > li').should('have.text', 'email or password is invalid')

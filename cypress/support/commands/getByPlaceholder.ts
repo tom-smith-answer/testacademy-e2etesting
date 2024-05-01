@@ -9,7 +9,6 @@ declare global {
     }
  }
  
- 
  Cypress.Commands.add('getByPlaceholder', (input: string) => {
     Cypress.log({
         displayName: 'getByPlaceholder',
