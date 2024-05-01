@@ -40,7 +40,6 @@
     "lint-staged": "^15.2.0",
     "msw": "^2.0.11",
     "rollup-plugin-analyzer": "^4.0.0",
-    "simple-git-hooks": "^2.9.0",
     "swagger-typescript-api": "^13.0.3",
     "typescript": "~5.2.2",
     "vite": "^5.0.7",
