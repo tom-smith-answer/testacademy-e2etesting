@@ -1,15 +1,14 @@
-describe('Conduit test framework', () => {
+describe('Login tests', () => {
 
-    it('signs in with a valid email and password', () => {
+    it.only('signs in with a valid email and password', () => {
         cy.visit('/')
         cy.signIn('test@answerdigital.com', 'password')
-        cy.get(':nth-child(4) > .nav-link')
+        cy.get('[data-test="test-answer"]')
         .click()
-
         cy.url().should('eq', `${Cypress.config('baseUrl')}#/profile/test-answer`)
     })
 
-    it('fails to sign in and displays an appropriate error message when given incorrect login details', () => {
+    it.only('fails to sign in and displays an appropriate error message when given incorrect login details', () => {
         cy.visit('/')
         cy.signIn('john.smith@answerdigital.com', 'wrongpass')
 
@@ -18,17 +17,21 @@ describe('Conduit test framework', () => {
         
     })
 
-    // it('a signed in user should be able to access their profile settings and update their password', () => {
-    //     cy.visit('/')
-    //     cy.signIn('test@answerdigital.com', 'password')
-    //     cy.changePassword('newpassword')
-    //     cy.signOut()
-    //     cy.signIn('test@answerdigital.com', 'newpassword')
+    it.only('a signed in user should be able to access their profile settings and update their password', () => {
+        cy.visit('/')
+        cy.signIn('test@answerdigital.com', 'password')
+        cy.changePassword('newpassword')
+        cy.signOut()
+        cy.signIn('test@answerdigital.com', 'newpassword')
 
-    //     cy.url().should('eq', `${Cypress.config('baseUrl')}#/profile/test-answer`)
-    //     cy.changePassword('password')
+        cy.url().should('eq', `${Cypress.config('baseUrl')}#/profile/test-answer`)
 
-    // })
+    })
+
+    after(() => {
+        cy.signIn('test@answerdigital.com', 'newpassword')
+        cy.changePassword('password')
+    })
 
 
 

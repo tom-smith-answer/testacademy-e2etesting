@@ -14,10 +14,9 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import "./commands/getByPlaceholder"
-import "./commands/signIn"
 import "./commands/changePassword"
+import "./commands/getBy"
+import "./commands/signIn"
 import "./commands/signOut"
-
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

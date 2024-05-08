@@ -21,6 +21,7 @@
                   aria-label="Avatar picture url"
                   type="text"
                   class="form-control"
+                  data-test="avatar-url-input"
                   placeholder="URL of profile picture"
                 >
               </fieldset>
@@ -30,6 +31,7 @@
                   aria-label="Username"
                   type="text"
                   class="form-control form-control-lg"
+                  data-test="username-input"
                   placeholder="Your name"
                 >
               </fieldset>
@@ -38,6 +40,7 @@
                   v-model="form.bio"
                   aria-label="Bio"
                   class="form-control form-control-lg"
+                  data-test="bio-input"
                   :rows="8"
                   placeholder="Short bio about you"
                 />
@@ -48,6 +51,7 @@
                   aria-label="Email"
                   type="email"
                   class="form-control form-control-lg"
+                  data-test="new-email-input"
                   placeholder="Email"
                 >
               </fieldset>
@@ -57,11 +61,13 @@
                   aria-label="New password"
                   type="password"
                   class="form-control form-control-lg"
+                  data-test="new-password-input"
                   placeholder="New password"
                 >
               </fieldset>
               <button
                 class="btn btn-lg btn-primary pull-xs-right"
+                data-test="update-settings-btn"
                 :disabled="isButtonDisabled"
                 type="submit"
               >
@@ -74,6 +80,7 @@
 
           <button
             class="btn btn-outline-danger"
+            data-test="log-out-btn"
             aria-label="Logout"
             @click="onLogout"
           >

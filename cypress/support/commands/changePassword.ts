@@ -10,11 +10,10 @@ declare global {
  }
 
 Cypress.Commands.add('changePassword', (newPassword:string) => {
-    cy.get(':nth-child(4) > .nav-link')
+    cy.get('[data-test="Settings"]')
     .click()
-    cy.get('.btn')
-    .click()
-    cy.getByPlaceholder('New password')
+    cy.getByTestId('new-password-input')
     .type(newPassword)
-    cy.get('form > :nth-child(1) > .btn').click()
+    cy.get('[data-test="update-settings-btn"]')
+    .click()
 })

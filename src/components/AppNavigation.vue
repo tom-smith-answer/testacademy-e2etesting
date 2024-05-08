@@ -16,6 +16,7 @@
         >
           <AppLink
             class="nav-link"
+            :data-test="link.title"
             active-class="active"
             :name="link.name"
             :params="link.params"

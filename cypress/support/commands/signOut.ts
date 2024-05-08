@@ -10,8 +10,9 @@ declare global {
  }
 
 Cypress.Commands.add('signOut', ()=> {
-    cy.get(':nth-child(3) > .nav-link')
+    cy.getByTestId('Settings')
     .click()
-    cy.get('.btn-outline-danger').click()
+    cy.getByTestId('log-out-btn').click()
+    cy.url().should("eq", `${Cypress.config('baseUrl')}#/`);
 
 })

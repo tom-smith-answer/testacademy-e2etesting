@@ -10,11 +10,13 @@ declare global {
  }
 
 Cypress.Commands.add('signIn', (email: string, password: string) => {
-    cy.get(':nth-child(2) > .nav-link')
+    cy.get('[data-test="Sign in"]')
     .click()
-    cy.getByPlaceholder('Email')
+    cy.url().should("eq", `${Cypress.config('baseUrl')}#/login`)
+    cy.getByTestId('email-input')
     .type(email)
-    cy.getByPlaceholder('Password')
+    cy.getByTestId('password-input')
     .type(password)
-    cy.get('.btn').click()
+    cy.get('[data-test="sign-in-btn"]')
+    .click()
 })

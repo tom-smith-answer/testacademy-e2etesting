@@ -6,6 +6,10 @@ declare global {
             getByPlaceholder(input: string): 
             Chainable<any>
         }
+        interface Chainable {
+            getByTestId(input: string): 
+            Chainable<any>
+        }
     }
  }
  
@@ -21,3 +25,7 @@ declare global {
     })
     cy.get(`[placeholder="${input}"]`)
  }) 
+
+ Cypress.Commands.add("getByTestId", (selector, ...args) => {
+    return cy.get(`[data-test=${selector}]`, ...args);
+  });
