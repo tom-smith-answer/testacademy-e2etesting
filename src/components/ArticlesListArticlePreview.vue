@@ -33,6 +33,7 @@
       name="article"
       :params="{ slug: props.article.slug }"
       class="preview-link"
+      :data-test="article.title"
     >
       <h1>{{ article.title }}</h1>
       <p>{{ article.description }}</p>

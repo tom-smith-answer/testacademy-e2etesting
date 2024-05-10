@@ -10,6 +10,7 @@
     :comment="comment"
     :username="username"
     @remove-comment="() => removeComment(comment.id)"
+    :data-test="comment.body"
   />
 </template>
 

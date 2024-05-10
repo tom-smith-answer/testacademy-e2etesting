@@ -5,8 +5,6 @@ declare global {
         interface Chainable {
             getByPlaceholder(input: string): 
             Chainable<any>
-        }
-        interface Chainable {
             getByTestId(input: string): 
             Chainable<any>
         }
