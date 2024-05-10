@@ -1,0 +1,28 @@
+{
+  "comments": [
+    {
+      "id": 1,
+      "createdAt": "2023-11-09T12:00:00.000Z",
+      "updatedAt": "2023-11-09T12:00:00.000Z",
+      "body": "Has anyone else got a comment for me?",
+      "author": {
+        "username": "Ruaridh",
+        "bio": null,
+        "image": "https://api.realworld.io/images/smiley-cyrus.jpeg",
+        "following": false
+      }
+    }, 
+    {
+      "id": 2,
+      "createdAt": "2024-11-09T12:00:00.000Z",
+      "updatedAt": "2024-11-09T12:00:00.000Z",
+      "body": "I have a comment for you!",
+      "author": {
+        "username": "testing-account",
+        "bio": null,
+        "image": "https://api.realworld.io/images/smiley-cyrus.jpeg",
+        "following": false
+      }
+    }
+  ]
+}

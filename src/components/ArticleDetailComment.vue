@@ -1,7 +1,7 @@
 <template>
   <div class="card">
-    <div class="card-block">
-      <p class="card-text">
+    <div class="card-block" data-test="comment">
+      <p class="card-text" :data-test="comment.body">
         {{ comment.body }}
       </p>
     </div>
@@ -38,6 +38,7 @@
           role="button"
           aria-label="Delete comment"
           class="ion-trash-a"
+          data-test="delete-comment-btn"
           @click="emit('remove-comment')"
           @keypress.enter="emit('remove-comment')"
         />

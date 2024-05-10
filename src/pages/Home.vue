@@ -11,7 +11,7 @@
 
     <div class="container page">
       <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-9" data-test="articles-list">
           <Suspense>
             <ArticlesList
               use-global-feed

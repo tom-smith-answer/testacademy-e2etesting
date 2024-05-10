@@ -1,5 +1,5 @@
 describe('Comment feild can accept alphanumeric values', () => {
-    
+
     it('Alphanumeric values are held in the input feild', () => {
         //arrange - sign in
         cy.visit('/')
@@ -7,13 +7,12 @@ describe('Comment feild can accept alphanumeric values', () => {
         cy.url().should('eq', `${Cypress.config('baseUrl')}#/`)
 
         //act - type alphanumeric characters 
-        cy.openArticle("Ill quantify the redundant TCP bus, that should hard drive the ADP bandwidth!")
+        cy.openFirstArticle()
         cy.get('[data-test="comment-input"]').type('1 new comment')
         .should('have.value', '1 new comment') //assert - feild contains input characters and post button is clickable
         cy.get('[data-test="post-comment-btn"]').should('not.be.disabled')
     })
 })
-
 
 describe('User should be able to add a comment', () => {
 
@@ -24,21 +23,21 @@ describe('User should be able to add a comment', () => {
         cy.url().should('eq', `${Cypress.config('baseUrl')}#/`)
 
         //act - add comment
-        cy.openArticle("Ill quantify the redundant TCP bus, that should hard drive the ADP bandwidth!")
+        cy.openFirstArticle()
         cy.addComment('New comment')
 
         //assert - comment exists
-        cy.get(`[data-test="New comment"] > .card-block`).should('exist')
+        cy.get('[data-test="New comment"]').should('exist')
     })
     it('User cannot add a comment when not signed in', () => {
         //arrange - vist
         cy.visit('/')
 
         //act - open article 
-        cy.openArticle("Ill quantify the redundant TCP bus, that should hard drive the ADP bandwidth!")
+        cy.openFirstArticle()
 
         //assert - comment input feild cannot be accessed
-        cy.get(`[data-test="New comment"] > .card-block`).should('not.exist')
+        cy.get(`[data-test="New comment"]`).should('not.exist')
     })
     it('Add comment button works once, user cannot spam comments', () => {
         //arrange - sign in
@@ -47,7 +46,7 @@ describe('User should be able to add a comment', () => {
         cy.url().should('eq', `${Cypress.config('baseUrl')}#/`)
 
         //act
-        cy.openArticle("Ill quantify the redundant TCP bus, that should hard drive the ADP bandwidth!")
+        cy.openFirstArticle()
         cy.addComment('New comment')
 
         //assert
@@ -60,7 +59,7 @@ describe('User should be able to add a comment', () => {
         cy.url().should('eq', `${Cypress.config('baseUrl')}#/`)
 
         //act - type empty comment
-        cy.openArticle("Ill quantify the redundant TCP bus, that should hard drive the ADP bandwidth!")
+        cy.openFirstArticle()
         cy.get('[data-test="comment-input"]').click()
 
         //assert - post comment button is disabled
@@ -73,12 +72,24 @@ describe('User should be able to add a comment', () => {
         cy.url().should('eq', `${Cypress.config('baseUrl')}#/`)
 
         //act - type and post space character comment
-        cy.openArticle("Ill quantify the redundant TCP bus, that should hard drive the ADP bandwidth!")
+        cy.openFirstArticle()
         cy.addComment(' ')
         cy.get('[data-test="post-comment-btn"]').should('be.disabled')
         
         //assert - text feild should be cleared and comment not posted
         cy.get(`[data-test=" "] > .card-block`).should('not.exist')
+    })
+})
+
+describe.only('User should be able to delete a comment', () => {
+
+    it('signed in user can delete one of their own comments', () => {
+
+        cy.visit('/')
+        cy.signIn('test@answer.com', 'password')
+        cy.loadArticleAndBackendComment("single-comment.json")
+
+        
     })
 })
 
