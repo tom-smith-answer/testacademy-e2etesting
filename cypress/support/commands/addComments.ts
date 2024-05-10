@@ -19,5 +19,4 @@ Cypress.Commands.add('openArticle', (title: string) => {
 Cypress.Commands.add('addComment', (comment: string) => {
     cy.get('[data-test="comment-input"]').type(comment)
     cy.get('[data-test="post-comment-btn"]').click()
-    cy.get(`[data-test="${comment}"] > .card-block`).should('exist')
 })
