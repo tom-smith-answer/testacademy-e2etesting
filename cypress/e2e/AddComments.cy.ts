@@ -81,24 +81,101 @@ describe('User should be able to add a comment', () => {
     })
 })
 
-describe.only('User should be able to delete a comment', () => {
+describe('User should be able to delete a comment', () => {
 
     it('signed in user can delete one of their own comments', () => {
-
+        //arrange - sign in and load article with existing comment
         cy.visit('/')
         cy.signIn('test@answer.com', 'password')
-        cy.loadArticleAndBackendComment("two-comments.json")
+        cy.loadArticleAndBackendComment("single-comment.json")
 
-        const commentNo = 1
+        cy.addComment("This is a new comment") //add a new comment
 
-        cy.getByTestId('comment-author').eq(commentNo).should('have.text', 'testing-account')
-        cy.getByTestId('delete-comment-btn').eq(commentNo).should('be.visible').children().eq(0).click()
+        const commentNo = 0
+        
+        cy.getByTestId('comment-author').eq(commentNo).should('have.text', 'testing-account') //act - attempt to delete comment with the correct username
+        cy.getByTestId('delete-comment-btn').eq(commentNo).should('be.visible').children().eq(0).click() 
+        
 
+        cy.get('[data-test="This is a new comment"]').should('not.exist') //assert - comment has been deleted
 
-        // cy.get(':nth-child(3) > [data-test="comment-footer"]').children().eq(1).should('have.text', 'testing-account')
-        // cy.get(':nth-child(3) > [data-test="comment-footer"]').children().eq(3).should('be.visible')
+    })
 
+    it("user cannot delete another user's comment", () => {
+        //arrange - sign in and load article and comment
+        cy.visit('/')
+        cy.signIn('test@answer.com', 'password')
+        cy.loadArticleAndBackendComment("single-comment.json")
+
+        //act - attempt to locate delete button and 
+        //assert - button is not clickable when username doesn't match the signed in user
+        cy.getByTestId('comment-author').should('not.have.text', 'testing-account')
+        cy.getByTestId('delete-comment-btn').should('not.be.visible')
+    })
+
+    it("user cannot delete comments when not signed in", () => {
+        //arrange - sign in and load article with existing comment
+        cy.visit('/')
+        cy.loadArticleAndBackendComment("single-comment.json")
+
+        //act - attempt to locate delete button and 
+        //assert - button is not clickable when no user is signed in
+
+        cy.getByTestId('delete-comment-btn').should('not.be.visible')
     })
 })
 
+describe('User can add multiple comments to an article', () => {
+
+    it('Comment feild clears after posting a comment', () => {
+        //arrange - sign in and open first article
+        cy.visit('/')
+        cy.signIn('test@answer.com', 'password')
+        cy.openFirstArticle()
+
+        //act - add a new comment
+        cy.addComment('This is a new comment')
+
+        //assert - input box clears to accept new comment after posting
+        cy.get('[data-test="comment-input"]').should('have.value', '')
+    })
+
+    it('A signed in user can add multiple comments', () => {
+        //arrange - sign in and open first article
+        cy.visit('/')
+        cy.signIn('test@answer.com', 'password')
+        cy.openFirstArticle()
+
+        //act - add new comments and
+        //assert - each comment exists after posting
+
+        cy.addComment('This is a new comment')
+        cy.get('[data-test="This is a new comment"]').should('exist')
+
+        cy.addComment('This is another new comment')
+        cy.get('[data-test="This is another new comment"]').should('exist')
+
+        cy.addComment('This is yet another new comment')
+        cy.get('[data-test="This is yet another new comment"]').should('exist')
+    })
+
+    it('User cannot continue to add comments after signing out', () => {
+        //arrange - sign in and open first article
+        cy.visit('/')
+        cy.signIn('test@answer.com', 'password')
+        cy.openFirstArticle()
+
+        //act - add comment, sign out, and reopen article
+        cy.addComment('This is a new comment')
+        cy.signOut()
+        cy.openFirstArticle()
+
+        //assert - add comment feild is no longer accessible
+        cy.get('[data-test="comment-input"]').should('not.exist')
+    })
+})
+
+describe('Comments are added with the correct attached info', () => {
+    
+})
 
