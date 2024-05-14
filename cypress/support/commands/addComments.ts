@@ -34,6 +34,4 @@ Cypress.Commands.add("loadArticleAndBackendComment", (fixture) => {
     cy.wait("@comments")
 
 
-
-
   });

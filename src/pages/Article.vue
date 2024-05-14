@@ -11,7 +11,7 @@
 
     <Suspense>
       <div class="row">
-        <div class="col-xs-12 col-md-8 offset-md-2" data-test="comments-list">
+        <div class="col-xs-12 col-md-8 offset-md-2">
           <ArticleDetailComments />
         </div>
       </div>

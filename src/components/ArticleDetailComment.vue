@@ -1,12 +1,13 @@
 <template>
   <div class="card">
-    <div class="card-block" data-test="comment">
+    <div class="card-block"
+    data-test="comment">
       <p class="card-text" :data-test="comment.body">
         {{ comment.body }}
       </p>
     </div>
 
-    <div class="card-footer">
+    <div class="card-footer" data-test="comment-footer">
       <AppLink
         name="profile"
         :params="{ username: comment.author.username }"
@@ -15,6 +16,7 @@
         <img
           :src="comment.author.image"
           class="comment-author-img"
+          data-test="comment-author-pic"
           :alt="comment.author.username"
         >
       </AppLink>
@@ -25,20 +27,21 @@
         name="profile"
         :params="{ username: comment.author.username }"
         class="comment-author"
+        data-test="comment-author"
       >
         {{ comment.author.username }}
       </AppLink>
 
-      <span class="date-posted">{{ (new Date(comment.createdAt)).toLocaleDateString('en-US') }}</span>
+      <span class="date-posted"
+      data-test="comment-date">{{ (new Date(comment.createdAt)).toLocaleDateString('en-US') }}</span>
 
-      <span class="mod-options">
+      <span class="mod-options" data-test="delete-comment-btn">
         <i
           v-if="showRemove"
           tabindex="0"
           role="button"
           aria-label="Delete comment"
           class="ion-trash-a"
-          data-test="delete-comment-btn"
           @click="emit('remove-comment')"
           @keypress.enter="emit('remove-comment')"
         />

@@ -9,6 +9,7 @@
   <form
     v-else
     class="card comment-form"
+    data-test="comment-form"
     @submit.prevent="submitComment"
   >
     <div class="card-block">

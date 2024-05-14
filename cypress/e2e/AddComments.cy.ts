@@ -87,9 +87,17 @@ describe.only('User should be able to delete a comment', () => {
 
         cy.visit('/')
         cy.signIn('test@answer.com', 'password')
-        cy.loadArticleAndBackendComment("single-comment.json")
+        cy.loadArticleAndBackendComment("two-comments.json")
 
-        
+        const commentNo = 1
+
+        cy.getByTestId('comment-author').eq(commentNo).should('have.text', 'testing-account')
+        cy.getByTestId('delete-comment-btn').eq(commentNo).should('be.visible').children().eq(0).click()
+
+
+        // cy.get(':nth-child(3) > [data-test="comment-footer"]').children().eq(1).should('have.text', 'testing-account')
+        // cy.get(':nth-child(3) > [data-test="comment-footer"]').children().eq(3).should('be.visible')
+
     })
 })
 
