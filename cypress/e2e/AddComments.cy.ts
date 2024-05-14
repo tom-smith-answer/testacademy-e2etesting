@@ -1,4 +1,4 @@
-describe('Comment feild can accept alphanumeric values', () => {
+describe.only('Comment feild can accept alphanumeric values', () => {
 
     it('Alphanumeric values are held in the input feild', () => {
         //arrange - sign in
@@ -11,6 +11,33 @@ describe('Comment feild can accept alphanumeric values', () => {
         cy.get('[data-test="comment-input"]').type('1 new comment')
         .should('have.value', '1 new comment') //assert - feild contains input characters and post button is clickable
         cy.get('[data-test="post-comment-btn"]').should('not.be.disabled')
+    })
+
+    it('html security should prevent links from being added to comments', () => {
+        //arrange - sign in and open first article
+        cy.visit('/')
+        cy.signIn('test@answer.com', 'password')
+        cy.openFirstArticle()
+
+        //act - post a new comment containing a html link and attempt to click it
+        cy.addComment('<a href="https://www.google.co.uk">This is a link</a>')
+        cy.get('[data-test="comment"]').children().eq(0).click()
+
+        //assert - url has not changed after attempting to click the link
+        cy.url().should('contain',`${Cypress.config('baseUrl')}`)
+    })
+
+    it('Users should not be able to add images in the comment field', () => {
+        //arrange - sign in and open first article
+        cy.visit('/')
+        cy.signIn('test@answer.com', 'password')
+        cy.openFirstArticle()
+
+        //act - attempt to attach img file in input field
+        cy.get('[data-test="comment-input"]').attachFile({filePath: '../resources/test-img.jpg', encoding: 'utf-8'})
+
+        //assert - comment cannot be posted 
+        cy.get('[data-test="post-comment-btn"]').should('be.disabled')
     })
 })
 
@@ -176,6 +203,33 @@ describe('User can add multiple comments to an article', () => {
 })
 
 describe('Comments are added with the correct attached info', () => {
-    
+    it('comments are added with the correct user info and datestamp', () => {
+        //arrange - sign in and open first article
+        cy.visit('/')
+        cy.signIn('test@answer.com', 'password')
+        cy.openFirstArticle()
+
+        //act - add a new comment
+        cy.addComment('This is a new comment')
+
+
+        //assert - new comment has correct details
+        let dateTime = new Date().toLocaleDateString('en-US') 
+        cy.get('[data-test="comment-date"]').should('have.text', dateTime)
+        cy.get('[data-test="comment-author"]').should('have.text', 'testing-account')
+        cy.get('[data-test="https://api.realworld.io/images/smiley-cyrus.jpeg"]').should('exist')
+    })
+})
+
+describe('Comment can be edited after posting', () => {
+    it('User can edit their own comment after posting', () => {
+        //arrange - sign in and open first article
+        cy.visit('/')
+        cy.signIn('test@answer.com', 'password')
+        cy.openFirstArticle()
+
+        //act - add a new comment
+        cy.addComment('This is a new comment')
+    })
 })
 

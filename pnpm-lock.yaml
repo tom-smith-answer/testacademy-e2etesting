@@ -51,6 +51,9 @@ importers:
       cypress:
         specifier: ^13.6.0
         version: 13.6.0
+      cypress-file-upload:
+        specifier: ^5.0.8
+        version: 5.0.8(cypress@13.6.0)
       eslint:
         specifier: ^8.54.0
         version: 8.54.0
@@ -1110,6 +1113,12 @@ packages:
 
   csstype@3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
+
+  cypress-file-upload@5.0.8:
+    resolution: {integrity: sha512-+8VzNabRk3zG6x8f8BWArF/xA/W0VK4IZNx3MV0jFWrJS/qKn8eHfa5nU73P9fOQAgwHFJx7zjg4lwOnljMO8g==}
+    engines: {node: '>=8.2.1'}
+    peerDependencies:
+      cypress: '>3.0.0'
 
   cypress@13.6.0:
     resolution: {integrity: sha512-quIsnFmtj4dBUEJYU4OH0H12bABJpSujvWexC24Ju1gTlKMJbeT6tTO0vh7WNfiBPPjoIXLN+OUqVtiKFs6SGw==}
@@ -4280,6 +4289,10 @@ snapshots:
   cssesc@3.0.0: {}
 
   csstype@3.1.2: {}
+
+  cypress-file-upload@5.0.8(cypress@13.6.0):
+    dependencies:
+      cypress: 13.6.0
 
   cypress@13.6.0:
     dependencies:

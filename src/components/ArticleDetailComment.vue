@@ -16,7 +16,7 @@
         <img
           :src="comment.author.image"
           class="comment-author-img"
-          data-test="comment-author-pic"
+          :data-test="comment.author.image"
           :alt="comment.author.username"
         >
       </AppLink>
