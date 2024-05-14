@@ -1,4 +1,4 @@
-describe.only('Comment feild can accept alphanumeric values', () => {
+describe('Comment feild can accept alphanumeric values', () => {
 
     it('Alphanumeric values are held in the input feild', () => {
         //arrange - sign in
@@ -221,15 +221,5 @@ describe('Comments are added with the correct attached info', () => {
     })
 })
 
-describe('Comment can be edited after posting', () => {
-    it('User can edit their own comment after posting', () => {
-        //arrange - sign in and open first article
-        cy.visit('/')
-        cy.signIn('test@answer.com', 'password')
-        cy.openFirstArticle()
 
-        //act - add a new comment
-        cy.addComment('This is a new comment')
-    })
-})
 

@@ -3,10 +3,22 @@ export {}
 declare global {
     namespace Cypress {
         interface Chainable {
+            /**
+             * automates sign in process
+             * @param email string email value
+             * @param password string password value
+             */
             signIn(email: string, password: string): 
             Chainable<any>
+            /**
+             * automates sign out process
+             */
             signOut(): 
             Chainable<any>
+            /**
+             * automates password change process from signed in homepage
+             * @param newPassword string new password value
+             */
             changePassword( newPassword: string): 
             Chainable<any>
         }

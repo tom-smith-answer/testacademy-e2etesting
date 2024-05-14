@@ -3,25 +3,33 @@ export {}
 declare global {
     namespace Cypress {
         interface Chainable {
-            getByPlaceholder(input: string): 
+            /**
+             * Selects an input field DOM element based on its placeholder value
+             * @param placeholder string value displayed in input field 
+             */
+            getByPlaceholder(placeholder: string): 
             Chainable<any>
+            /**
+             * Selects a DOM element based on its data-test tag
+             * @param input string value used as data-test tag
+             */
             getByTestId(input: string): 
             Chainable<any>
         }
     }
  }
  
- Cypress.Commands.add('getByPlaceholder', (input: string) => {
+ Cypress.Commands.add('getByPlaceholder', (placeholder: string) => {
     Cypress.log({
         displayName: 'getByPlaceholder',
-        message: input,
+        message: placeholder,
         consoleProps() {
             return {
-                selector: input
+                selector: placeholder
             }
         }
     })
-    cy.get(`[placeholder="${input}"]`)
+    cy.get(`[placeholder="${placeholder}"]`)
  }) 
 
  Cypress.Commands.add("getByTestId", (selector, ...args) => {
