@@ -17,5 +17,6 @@
 import "./commands/getBy"
 import "./commands/signIn"
 import "./commands/addComments"
+import "./commands/favouriteArticles"
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

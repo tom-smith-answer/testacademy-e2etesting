@@ -22,6 +22,7 @@
         :aria-label="article.favorited ? 'Unfavorite article' : 'Favorite article'"
         class="btn btn-sm pull-xs-right"
         :class="[article.favorited ? 'btn-primary' : 'btn-outline-primary']"
+        data-test="heart-btn"
         :disabled="favoriteProcessGoing"
         @click="() => favoriteArticle()"
       >
