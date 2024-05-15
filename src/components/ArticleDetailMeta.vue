@@ -26,7 +26,7 @@
       :disabled="followProcessGoing"
       @click="toggleFollow"
     >
-      <i class="ion-plus-round space" />
+      <i class="ion-plus-round space"/>
       {{ article.author.following ? "Unfollow" : "Follow" }} {{ article.author.username }}
     </button>
 
@@ -34,6 +34,7 @@
       :aria-label="article.favorited ? 'Unfavorite article' : 'Favorite article'"
       class="btn btn-sm space"
       :class="[article.favorited ? 'btn-primary' : 'btn-outline-primary']"
+      data-test="favourite-btn"
       :disabled="favoriteProcessGoing"
       @click="favoriteArticle"
     >
