@@ -6,6 +6,11 @@ function getCountFromText(text: string): number {
     else if (text[1] === 'U'){
         return Number(text.slice(21, text.length - 1))
     }
+
+    else {
+        console.log(Number(text.slice(1)))
+        return Number(text.slice(1))
+    }
 }
 
 export default getCountFromText
