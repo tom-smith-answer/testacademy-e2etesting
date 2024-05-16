@@ -1,20 +1,24 @@
+import getCountFromText from "../utils"
+
 export {}
 
 declare global {
     namespace Cypress {
         interface Chainable {
-            clickTopFavourite():
-            Chainable<any>
-            clickBottomFavourite():
-            Chainable<any>
             clickFavourite(location: string):
             Chainable<any>
+
             clickFirstHeart():
             Chainable<any>
+
+            getTextFromElement(dataTestTag: string):
+            Chainable<any>
+
+            getFavCount(buttonNo: number):
+            Chainable<number>
         }
     }
 }
-
 
 
 Cypress.Commands.add('clickFavourite', (location: string) => {
@@ -27,5 +31,18 @@ Cypress.Commands.add('clickFavourite', (location: string) => {
 })
 
 Cypress.Commands.add('clickFirstHeart', () => {
-    cy.getByTestId('heart-btn').eq(0).click()
+    cy.getByTestId('favourite-btn').eq(0).click()
+})
+
+Cypress.Commands.add('getTextFromElement', (dataTestTag: string) => {
+    cy.getByTestId(dataTestTag).eq(0).invoke('text').as('text')
+    cy.get<string>('@text')
+})
+
+Cypress.Commands.add('getFavCount', (buttonNo: number) => {
+    cy.getByTestId('favourite-btn').eq(buttonNo).invoke('text').as('text')
+    cy.get<string>('@text').then((text) => {
+        let favCount = getCountFromText(text)
+        return favCount
+    })
 })

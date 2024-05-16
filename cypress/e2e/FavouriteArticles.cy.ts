@@ -1,3 +1,5 @@
+import getCountFromText from "../support/utils"
+
 describe('Clicking the favourite button causes it to become highlighted', () => {
 
     it('Signed in user can click either favourite buttons and see them both highlighted', () => {
@@ -142,5 +144,64 @@ describe('User should unhighlight favourite button on clicking unfavourite', () 
 
         //act - get first heart without clicking to favourite
         cy.getByTestId('heart-btn').eq(0).should('have.class', 'btn-outline-primary') //assert - button has the unfavourited class by default 
+    })
+})
+
+describe.only('Favouriting an article causes the count to increase by 1', () => {
+
+    it('Signed in user can follow an article and see the count increase by 1', () => {
+       //arrange - sign in and open first article
+       cy.visit('/')
+       cy.signIn('test@answer.com', 'password')
+       cy.openFirstArticle()
+
+       //act - save the initial favourite count and then click one of the favourite buttons
+       cy.getTextFromElement('favourite-btn')
+       .then((text) => {
+            let favCount = getCountFromText(text)
+            return favCount
+       })
+       .then((favCount) => {
+            cy.clickFavourite('top')
+            cy.getByTestId('favourite-btn').should('have.class', 'btn-primary')
+            cy.getFavCount(0).should('eq', favCount + 1) //assert - new count is 1 greater than the inital favourite count
+       })
+
+       cy.clickFavourite('top') //unclick to reset favourite count
+    })
+
+    it('user cannot increase favourite count when not signed in', () => {
+        //arrange - sign in and open first article
+        cy.visit('/')
+        cy.openFirstArticle()
+
+        //act - save the initial favourite count and then click one of the favourite buttons
+        cy.getTextFromElement('favourite-btn')
+        .then((text) => {
+            let favCount = getCountFromText(text)
+            return favCount
+        })
+        .then((favCount) => {
+            cy.clickFavourite('top')
+            cy.getFavCount(0).should('eq', favCount) //assert - new count is not greater than the initial favourite count
+       })
+    })
+    it('User cannot spam favourite button to increase count', () => {
+       //arrange - sign in and open first article             
+       cy.visit('/')
+       cy.signIn('test@answer.com', 'password')
+       cy.openFirstArticle()
+
+       //act - save the initial favourite count and then click one of the favourite buttons 4 times
+       cy.getTextFromElement('favourite-btn')
+       .then((text) => {
+            let favCount = getCountFromText(text)
+            return favCount
+       })
+       .then((favCount) => {
+            cy.clickFavourite('top').clickFavourite('top').clickFavourite('top').clickFavourite('top')
+            cy.getByTestId('favourite-btn').should('have.class', 'btn-primary')
+            cy.getFavCount(0).should('not.eq', favCount + 4) //assert - new count is not 4 greater than the inital favourite count
+       })
     })
 })
