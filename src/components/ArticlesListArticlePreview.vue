@@ -37,7 +37,7 @@
       
     >
       <h1 data-test="article-title">{{ article.title }}</h1>
-      <p>{{ article.description }}</p>
+      <p :data-test="article.title">{{ article.description }}</p>
       <span>Read more...</span>
       <ul class="tag-list">
         <li

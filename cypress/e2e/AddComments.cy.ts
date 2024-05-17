@@ -7,7 +7,7 @@ describe('Comment feild can accept alphanumeric values', () => {
         cy.url().should('eq', `${Cypress.config('baseUrl')}#/`)
 
         //act - type alphanumeric characters 
-        cy.openFirstArticle()
+        cy.openArticle(0)
         cy.get('[data-test="comment-input"]').type('1 new comment')
         .should('have.value', '1 new comment') //assert - feild contains input characters and post button is clickable
         cy.get('[data-test="post-comment-btn"]').should('not.be.disabled')
@@ -17,7 +17,7 @@ describe('Comment feild can accept alphanumeric values', () => {
         //arrange - sign in and open first article
         cy.visit('/')
         cy.signIn('test@answer.com', 'password')
-        cy.openFirstArticle()
+        cy.openArticle(0)
 
         //act - post a new comment containing a html link and attempt to click it
         cy.addComment('<a href="https://www.google.co.uk">This is a link</a>')
@@ -31,7 +31,7 @@ describe('Comment feild can accept alphanumeric values', () => {
         //arrange - sign in and open first article
         cy.visit('/')
         cy.signIn('test@answer.com', 'password')
-        cy.openFirstArticle()
+        cy.openArticle(0)
 
         //act - attempt to attach img file in input field
         cy.get('[data-test="comment-input"]').attachFile({filePath: '../resources/test-img.jpg', encoding: 'utf-8'})
@@ -50,7 +50,7 @@ describe('User should be able to add a comment', () => {
         cy.url().should('eq', `${Cypress.config('baseUrl')}#/`)
 
         //act - add comment
-        cy.openFirstArticle()
+        cy.openArticle(0)
         cy.addComment('New comment')
 
         //assert - comment exists
@@ -61,7 +61,7 @@ describe('User should be able to add a comment', () => {
         cy.visit('/')
 
         //act - open article 
-        cy.openFirstArticle()
+        cy.openArticle(0)
 
         //assert - comment input feild cannot be accessed
         cy.get(`[data-test="New comment"]`).should('not.exist')
@@ -73,7 +73,7 @@ describe('User should be able to add a comment', () => {
         cy.url().should('eq', `${Cypress.config('baseUrl')}#/`)
 
         //act
-        cy.openFirstArticle()
+        cy.openArticle(0)
         cy.addComment('New comment')
 
         //assert
@@ -86,7 +86,7 @@ describe('User should be able to add a comment', () => {
         cy.url().should('eq', `${Cypress.config('baseUrl')}#/`)
 
         //act - type empty comment
-        cy.openFirstArticle()
+        cy.openArticle(0)
         cy.get('[data-test="comment-input"]').click()
 
         //assert - post comment button is disabled
@@ -99,7 +99,7 @@ describe('User should be able to add a comment', () => {
         cy.url().should('eq', `${Cypress.config('baseUrl')}#/`)
 
         //act - type and post space character comment
-        cy.openFirstArticle()
+        cy.openArticle(0)
         cy.addComment(' ')
         cy.get('[data-test="post-comment-btn"]').should('be.disabled')
         
@@ -158,7 +158,7 @@ describe('User can add multiple comments to an article', () => {
         //arrange - sign in and open first article
         cy.visit('/')
         cy.signIn('test@answer.com', 'password')
-        cy.openFirstArticle()
+        cy.openArticle(0)
 
         //act - add a new comment
         cy.addComment('This is a new comment')
@@ -171,7 +171,7 @@ describe('User can add multiple comments to an article', () => {
         //arrange - sign in and open first article
         cy.visit('/')
         cy.signIn('test@answer.com', 'password')
-        cy.openFirstArticle()
+        cy.openArticle(0)
 
         //act - add new comments and
         //assert - each comment exists after posting
@@ -190,12 +190,12 @@ describe('User can add multiple comments to an article', () => {
         //arrange - sign in and open first article
         cy.visit('/')
         cy.signIn('test@answer.com', 'password')
-        cy.openFirstArticle()
+        cy.openArticle(0)
 
         //act - add comment, sign out, and reopen article
         cy.addComment('This is a new comment')
         cy.signOut()
-        cy.openFirstArticle()
+        cy.openArticle(0)
 
         //assert - add comment feild is no longer accessible
         cy.get('[data-test="comment-input"]').should('not.exist')
@@ -207,7 +207,7 @@ describe('Comments are added with the correct attached info', () => {
         //arrange - sign in and open first article
         cy.visit('/')
         cy.signIn('test@answer.com', 'password')
-        cy.openFirstArticle()
+        cy.openArticle(0)
 
         //act - add a new comment
         cy.addComment('This is a new comment')

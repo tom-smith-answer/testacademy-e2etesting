@@ -40,7 +40,7 @@
     >
       <i class="ion-heart space" />
       {{ article.favorited ? 'Unfavorite' : 'Favorite' }} Article
-      <span class="counter">({{ article.favoritesCount }})</span>
+      <span class="counter" data-test="fav-count">({{ article.favoritesCount }})</span>
     </button>
 
     <AppLink

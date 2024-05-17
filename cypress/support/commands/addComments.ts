@@ -6,7 +6,7 @@ declare global {
             /**
              * Opens the first article on the page
              */
-            openFirstArticle():
+            openArticle(articleNo: number):
             Chainable<any>
             /**
              * Types and posts a comment on the current article
@@ -24,8 +24,8 @@ declare global {
     }
 }
 
-Cypress.Commands.add('openFirstArticle', () => {
-    cy.get(`[data-test="article-title"]`).eq(0).click()
+Cypress.Commands.add('openArticle', (articleNo: number) => {
+    cy.get(`[data-test="article-title"]`).eq(articleNo).click()
     cy.url().should('include', 'article')
 })
 
