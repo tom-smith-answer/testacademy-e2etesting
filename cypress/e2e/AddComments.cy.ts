@@ -1,9 +1,13 @@
+beforeEach(() => {
+    cy.visit("/");
+  })
+  
 describe('Comment feild can accept alphanumeric values', () => {
-
+    beforeEach(() => {
+        cy.signIn('test@answer.com', 'password')
+      })  
     it('Alphanumeric values are held in the input feild', () => {
         //arrange - sign in
-        cy.visit('/')
-        cy.signIn('test@answer.com', 'password')
         cy.url().should('eq', `${Cypress.config('baseUrl')}#/`)
 
         //act - type alphanumeric characters 
@@ -15,8 +19,6 @@ describe('Comment feild can accept alphanumeric values', () => {
 
     it('html security should prevent links from being added to comments', () => {
         //arrange - sign in and open first article
-        cy.visit('/')
-        cy.signIn('test@answer.com', 'password')
         cy.openArticle(0)
 
         //act - post a new comment containing a html link and attempt to click it
@@ -29,8 +31,6 @@ describe('Comment feild can accept alphanumeric values', () => {
 
     it('Users should not be able to add images in the comment field', () => {
         //arrange - sign in and open first article
-        cy.visit('/')
-        cy.signIn('test@answer.com', 'password')
         cy.openArticle(0)
 
         //act - attempt to attach img file in input field
@@ -42,10 +42,8 @@ describe('Comment feild can accept alphanumeric values', () => {
 })
 
 describe('User should be able to add a comment', () => {
-
     it('A signed in user can add a comment', () => {
         //arrange - sign in
-        cy.visit('/')
         cy.signIn('test@answer.com', 'password')
         cy.url().should('eq', `${Cypress.config('baseUrl')}#/`)
 
@@ -56,19 +54,18 @@ describe('User should be able to add a comment', () => {
         //assert - comment exists
         cy.get('[data-test="New comment"]').should('exist')
     })
+
     it('User cannot add a comment when not signed in', () => {
         //arrange - vist
-        cy.visit('/')
-
         //act - open article 
         cy.openArticle(0)
 
         //assert - comment input feild cannot be accessed
         cy.get(`[data-test="New comment"]`).should('not.exist')
     })
+
     it('Add comment button works once, user cannot spam comments', () => {
         //arrange - sign in
-        cy.visit('/')
         cy.signIn('test@answer.com', 'password')
         cy.url().should('eq', `${Cypress.config('baseUrl')}#/`)
 
@@ -79,9 +76,9 @@ describe('User should be able to add a comment', () => {
         //assert
         cy.get('[data-test="post-comment-btn"]').should('be.disabled')
     })
+
     it('User cannot add an empty string comment', () => {
         //arrange - sign in
-        cy.visit('/')
         cy.signIn('test@answer.com', 'password')
         cy.url().should('eq', `${Cypress.config('baseUrl')}#/`)
 
@@ -92,9 +89,9 @@ describe('User should be able to add a comment', () => {
         //assert - post comment button is disabled
         cy.get('[data-test="post-comment-btn"]').should('be.disabled')
     })
+
     it.skip('User cannot add a string of spaces as a comment', () => {
         //arrange - sign in
-        cy.visit('/')
         cy.signIn('test@answer.com', 'password')
         cy.url().should('eq', `${Cypress.config('baseUrl')}#/`)
 
@@ -109,10 +106,8 @@ describe('User should be able to add a comment', () => {
 })
 
 describe('User should be able to delete a comment', () => {
-
     it('signed in user can delete one of their own comments', () => {
         //arrange - sign in and load article with existing comment
-        cy.visit('/')
         cy.signIn('test@answer.com', 'password')
         cy.loadArticleAndBackendComment("single-comment.json")
 
@@ -130,7 +125,6 @@ describe('User should be able to delete a comment', () => {
 
     it("user cannot delete another user's comment", () => {
         //arrange - sign in and load article and comment
-        cy.visit('/')
         cy.signIn('test@answer.com', 'password')
         cy.loadArticleAndBackendComment("single-comment.json")
 
@@ -142,22 +136,20 @@ describe('User should be able to delete a comment', () => {
 
     it("user cannot delete comments when not signed in", () => {
         //arrange - sign in and load article with existing comment
-        cy.visit('/')
         cy.loadArticleAndBackendComment("single-comment.json")
 
         //act - attempt to locate delete button and 
         //assert - button is not clickable when no user is signed in
-
         cy.getByTestId('delete-comment-btn').should('not.be.visible')
     })
 })
 
 describe('User can add multiple comments to an article', () => {
-
+    beforeEach(() => {
+        cy.signIn('test@answer.com', 'password')
+      })  
     it('Comment feild clears after posting a comment', () => {
         //arrange - sign in and open first article
-        cy.visit('/')
-        cy.signIn('test@answer.com', 'password')
         cy.openArticle(0)
 
         //act - add a new comment
@@ -169,8 +161,6 @@ describe('User can add multiple comments to an article', () => {
 
     it('A signed in user can add multiple comments', () => {
         //arrange - sign in and open first article
-        cy.visit('/')
-        cy.signIn('test@answer.com', 'password')
         cy.openArticle(0)
 
         //act - add new comments and
@@ -188,8 +178,6 @@ describe('User can add multiple comments to an article', () => {
 
     it('User cannot continue to add comments after signing out', () => {
         //arrange - sign in and open first article
-        cy.visit('/')
-        cy.signIn('test@answer.com', 'password')
         cy.openArticle(0)
 
         //act - add comment, sign out, and reopen article
@@ -205,7 +193,6 @@ describe('User can add multiple comments to an article', () => {
 describe('Comments are added with the correct attached info', () => {
     it('comments are added with the correct user info and datestamp', () => {
         //arrange - sign in and open first article
-        cy.visit('/')
         cy.signIn('test@answer.com', 'password')
         cy.openArticle(0)
 
