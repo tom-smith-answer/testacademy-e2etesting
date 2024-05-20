@@ -21,20 +21,25 @@ declare global {
              */
             changePassword( newPassword: string): 
             Chainable<any>
+
+            backendSignIn(email: string, password: string):
+            Chainable<any>
         }
     }
  }
 
 Cypress.Commands.add('signIn', (email: string, password: string) => {
-    cy.get('[data-test="Sign in"]')
-    .click()
-    cy.url().should("eq", `${Cypress.config('baseUrl')}#/login`)
-    cy.getByTestId('email-input')
-    .type(email)
-    cy.getByTestId('password-input')
-    .type(password)
-    cy.get('[data-test="sign-in-btn"]')
-    .click()
+    cy.session('SignIn', () => {
+        cy.visit('/')
+        cy.get('[data-test="Sign in"]').click()
+        cy.url().should("eq", `${Cypress.config('baseUrl')}#/login`)
+        cy.getByTestId('email-input').type(email)
+        cy.getByTestId('password-input').type(password)
+        cy.get('[data-test="sign-in-btn"]').click()
+        cy.getByTestId('Home').should('exist')
+    }, {
+        cacheAcrossSpecs: true
+    })
 })
 
 Cypress.Commands.add('signOut', ()=> {
@@ -52,4 +57,21 @@ Cypress.Commands.add('changePassword', (newPassword:string) => {
     .click()
     cy.url().should('eq', `${Cypress.config('baseUrl')}#/profile/testing-account` )
     cy.getByTestId('profile-favorites').should('exist')
+})
+
+Cypress.Commands.add('backendSignIn', (email: string, password: string) => {
+    cy.request('POST', 'https://api.realworld.io/api/users/login', {
+        user: { email: email, password: password }
+    }).then((response) => {
+        const user= JSON.stringify({
+            email: response.body.user.email,
+            username: response.body.user.username,
+            bio: response.body.user.bio,
+            image: response.body.user.image,
+            token: response.body.user.token,
+        });
+
+        window.localStorage.setItem('user', user);
+        cy.visit(`${Cypress.config('baseUrl')}`);
+    })
 })

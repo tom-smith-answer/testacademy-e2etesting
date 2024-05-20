@@ -8,4 +8,8 @@ export default defineConfig({
     },
     baseUrl: 'http://localhost:5173/'
   },
+  env: {
+    login_email: 'test@answer.com',
+    login_password: 'password'
+  }
 });
