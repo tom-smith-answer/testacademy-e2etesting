@@ -50,4 +50,6 @@ Cypress.Commands.add('changePassword', (newPassword:string) => {
     .type(newPassword)
     cy.get('[data-test="update-settings-btn"]')
     .click()
+    cy.url().should('eq', `${Cypress.config('baseUrl')}#/profile/testing-account` )
+    cy.getByTestId('profile-favorites').should('exist')
 })
