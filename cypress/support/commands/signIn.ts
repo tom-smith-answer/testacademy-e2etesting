@@ -29,7 +29,6 @@ declare global {
  }
 
 Cypress.Commands.add('signIn', (email: string, password: string) => {
-    cy.session('SignIn', () => {
         cy.visit('/')
         cy.get('[data-test="Sign in"]').click()
         cy.url().should("eq", `${Cypress.config('baseUrl')}#/login`)
@@ -37,9 +36,6 @@ Cypress.Commands.add('signIn', (email: string, password: string) => {
         cy.getByTestId('password-input').type(password)
         cy.get('[data-test="sign-in-btn"]').click()
         cy.getByTestId('Home').should('exist')
-    }, {
-        cacheAcrossSpecs: true
-    })
 })
 
 Cypress.Commands.add('signOut', ()=> {

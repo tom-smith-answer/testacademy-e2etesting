@@ -1,3 +1,6 @@
+{
+  const enVar = Cypress.env();
+
 beforeEach(() => {
   cy.visit("/");
 })
@@ -5,7 +8,7 @@ beforeEach(() => {
 describe("Clicking the favourite button causes it to become highlighted", () => {
   it("Signed in user can click either favourite buttons and see them both highlighted", () => {
     //arrange - sign in and open first article
-    cy.signIn("test@answer.com", "password");
+    cy.backendSignIn(enVar.login_email, enVar.login_password);
     cy.openArticle(0);
 
     //act - click the favourite button at the top of the page
@@ -38,7 +41,7 @@ describe("Clicking the favourite button causes it to become highlighted", () => 
 
   it("Signed in user can click an article card's heart button and see it highlighted", () => {
     //arrange - sign in
-    cy.signIn("test@answer.com", "password");
+    cy.backendSignIn(enVar.login_email, enVar.login_password);
 
     //act - click the first heart button
     cy.clickHeart(0).should("have.class", "btn-primary"); //assert - button has the css class indicating it is highlighted
@@ -54,7 +57,7 @@ describe("Clicking the favourite button causes it to become highlighted", () => 
 
   it("Favourite button colour should match the favourite/unfavourite state", () => {
     //arrange - sign in and open first article
-    cy.signIn("test@answer.com", "password");
+    cy.backendSignIn(enVar.login_email, enVar.login_password);
     cy.openArticle(0);
 
     //act - get both favourite buttons without clicking
@@ -73,7 +76,7 @@ describe("Clicking the favourite button causes it to become highlighted", () => 
 
   it("Heart button colour should match the favourite/unfavourite state", () => {
     //arrange - sign in and open first article
-    cy.signIn("test@answer.com", "password");
+    cy.backendSignIn(enVar.login_email, enVar.login_password);
 
     //act - get heart buttons without clicking
     cy.getByTestId("favourite-btn").should("have.css", "background-color").and("include", "rgba(0, 0, 0, 0)"); //assert - they have no background colour initally
@@ -90,7 +93,7 @@ describe("Clicking the favourite button causes it to become highlighted", () => 
 
   it("Button text should match the favourite/unfavourite state", () => {
     //arrange - sign in and open first article
-    cy.signIn("test@answer.com", "password");
+    cy.backendSignIn(enVar.login_email, enVar.login_password);
     cy.openArticle(0);
 
     //act - get favourite buttons without clicking
@@ -108,7 +111,7 @@ describe("Clicking the favourite button causes it to become highlighted", () => 
 
 describe("User should unhighlight favourite button on clicking unfavourite", () => {
   beforeEach(() => {
-    cy.signIn("test@answer.com", "password");
+    cy.backendSignIn(enVar.login_email, enVar.login_password);
   })
   it("Signed in user can click either unfavourite button to unhighlight a favourited article", () => {
     //arrange - sign in, open and favourite first article
@@ -164,7 +167,7 @@ describe("User should unhighlight favourite button on clicking unfavourite", () 
 describe("Favouriting an article causes the count to increase by 1", () => {
   it("Signed in user can follow an article and see the count increase by 1", () => {
     //arrange - sign in and open first article
-    cy.signIn("test@answer.com", "password");
+    cy.backendSignIn(enVar.login_email, enVar.login_password);
     cy.openArticle(0);
 
     //act - save the initial favourite count and then click one of the favourite buttons
@@ -192,7 +195,7 @@ describe("Favouriting an article causes the count to increase by 1", () => {
 
   it("User cannot spam favourite button to increase count", () => {
     //arrange - sign in and open first article
-    cy.signIn("test@answer.com", "password");
+    cy.backendSignIn(enVar.login_email, enVar.login_password);
     cy.openArticle(0);
 
     //act - save the initial favourite count and then click one of the favourite buttons 4 times
@@ -209,7 +212,7 @@ describe("Favouriting an article causes the count to increase by 1", () => {
 
   it("Signed in user can heart an article and see the count increase by 1", () => {
     //arrange - sign in
-    cy.signIn("test@answer.com", "password");
+    cy.backendSignIn(enVar.login_email, enVar.login_password);
     //act - save the initial favourite count and click the first heart button
 
     cy.getHeartFavCount(0)
@@ -234,16 +237,17 @@ describe("Favouriting an article causes the count to increase by 1", () => {
 
   it("User cannot spam heart button to increase the count", () => {
     //arrange - sign in
-    cy.signIn("test@answer.com", "password");
+    cy.backendSignIn(enVar.login_email, enVar.login_password);
 
     //act - save the initial first favourite count and then click the first heart buttons 4 times
     cy.getHeartFavCount(0)
       .then((favCount) => {
+        console.log(favCount)
         cy.clickHeart(0)
         .clickHeart(0)
         .clickHeart(0)
         .clickHeart(0);
-        cy.getByTestId("favourite-btn").eq(0).should("have.class", "btn-outline-primary");
+        cy.getByTestId("favourite-btn").eq(0).should("have.css", "background-color").and('include', 'rgba(0, 0, 0, 0)');
         cy.getHeartFavCount(0).should("eq", favCount); //assert - new count is not 4 greater than the inital favourite count
       });
   });
@@ -251,7 +255,7 @@ describe("Favouriting an article causes the count to increase by 1", () => {
 
 describe("Unfavouriting an article causes favourite count to decrease by 1", () => {
   beforeEach(() => {
-    cy.signIn("test@answer.com", "password");
+    cy.backendSignIn(enVar.login_email, enVar.login_password);
   })
   it("Signed in user can unfollow an article and see the count decrease by 1", () => {
     //arrange - sign in, open the first article and click one of the favourite buttons
@@ -321,7 +325,7 @@ describe("User can favourite an article", () => {
   })
   it.skip("A signed in user can favourite an article and see it added to the 'your feed' tab", () => {
     //arrange - sign in, open the first article, click one of the favourite buttons and return home
-    cy.signIn("test@answer.com", "password");
+    cy.backendSignIn(enVar.login_email, enVar.login_password);
     cy.openArticle(0);
     cy.clickFavouriteOrUnfavourite(0);
     cy.getByTestId('Home').click().url().should('not.include', 'article');
@@ -342,7 +346,7 @@ describe("User can favourite an article", () => {
     cy.getArticleTitle(0).then((title) => {
       cy.openArticle(0);
       cy.clickFavouriteOrUnfavourite(0)
-      cy.signIn('test@answer.com', 'password')
+      cy.backendSignIn(enVar.login_email, enVar.login_password);
       cy.getByTestId('my-feed').click().url().should('include', 'my-feed');
       cy.getByTestId(title).should('not.exist') //assert - article is not visible in "your feed" once signed in
     })
@@ -350,7 +354,7 @@ describe("User can favourite an article", () => {
 
   it.skip(`Unfavouriting an article removes it from a user's "my feed" tab`, () => {
     //arrange - sign in, open the first article, click one of the favourite buttons and return home
-    cy.signIn("test@answer.com", "password");
+    cy.backendSignIn(enVar.login_email, enVar.login_password);
     cy.openArticle(0);
     cy.clickFavouriteOrUnfavourite(0);
     cy.getByTestId('Home').click().url()
@@ -369,7 +373,7 @@ describe("User can favourite an article", () => {
 
   it('Signed in user can add an article to their favourites tab on their profile', () => {
     //arrange - sign in 
-    cy.signIn("test@answer.com", "password");
+    cy.backendSignIn(enVar.login_email, enVar.login_password);
 
     //act - open and favourite the first article
     cy.getArticleTitle(0).then((title) => {
@@ -388,7 +392,7 @@ describe("User can favourite an article", () => {
     cy.getArticleTitle(0).then((title) => {
       cy.openArticle(0);
       cy.clickFavouriteOrUnfavourite(0)
-      cy.signIn('test@answer.com', 'password')
+      cy.backendSignIn(enVar.login_email, enVar.login_password);
 
       cy.openFavourites()
       cy.getByTestId(title).should('not.exist') //assert - article is not visible in "your feed" once signed in
@@ -397,7 +401,7 @@ describe("User can favourite an article", () => {
 
   it('Unfavouriting an article removes the article from a users "favorite articles" tab', () => {
     //arrange - sign in, open the first article, click one of the favourite buttons
-    cy.signIn("test@answer.com", "password");
+    cy.backendSignIn(enVar.login_email, enVar.login_password);
 
     cy.getArticleTitle(0).then((title) => {
       cy.openArticle(0);
@@ -416,7 +420,7 @@ describe("User can favourite an article", () => {
 
 describe("User can favourite multiple articles", () => {
   beforeEach(() => {
-    cy.signIn("test@answer.com", "password");
+    cy.backendSignIn(enVar.login_email, enVar.login_password);
   })
 
   it.skip('Signed in user can favourite multiple articles and see them appear in their "favourite articles" tab', () => {
@@ -490,7 +494,7 @@ describe("User can favourite multiple articles", () => {
 
 describe('Page elements should display persitance', () => {
   beforeEach(() => {
-    cy.signIn("test@answer.com", "password");
+    cy.backendSignIn(enVar.login_email, enVar.login_password);
   })
   it.skip('Button states should persist between pages', () => {
     //arrange - sign in 
@@ -519,3 +523,5 @@ describe('Page elements should display persitance', () => {
     cy.resetFavCount('favourite', 1)
   })
 })
+
+}
