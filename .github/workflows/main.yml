@@ -19,7 +19,8 @@ jobs:
         with:
           node-version: '20'
           cache: pnpm
-      - run: pnpm install
+      - name: Install pnpm
+        run: npm i -g pnpm
 
       - name: Cypress install
         uses: cypress-io/github-action@v6
