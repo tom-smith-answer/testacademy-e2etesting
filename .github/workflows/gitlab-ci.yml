@@ -1,7 +1,7 @@
 stages: 
   - test
 
-test;
+test:
   image: node:latest
   stage: test
   script: 
