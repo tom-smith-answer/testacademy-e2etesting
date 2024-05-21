@@ -1,0 +1,10 @@
+stages: 
+  - test
+
+test;
+  image: node:latest
+  stage: test
+  script: 
+    -npm ci
+    -npm start &
+    -npm run e2e
