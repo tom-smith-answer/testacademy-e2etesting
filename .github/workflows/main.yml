@@ -48,7 +48,7 @@ jobs:
         run: npm run dev & 
   
       - name: Run Cypress
-        run: pnpm cypress start
+        run: pnpm cypress run
 
 
   # cypress-run:
