@@ -15,12 +15,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install pnpm
+        run: npm i -g pnpm
+        
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: pnpm
-      - name: Install pnpm
-        run: npm i -g pnpm
 
       - name: Cypress install
         uses: cypress-io/github-action@v6
