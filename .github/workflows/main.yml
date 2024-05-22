@@ -20,6 +20,13 @@ jobs:
           version: 8
           run_install: false
 
+      - name: Get pnpm store directory
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+        - uses: actions/cache@v4
+          with:
+            path: ${{ env.STORE_PATH }}
+            key: 'pnpm-${{ runner.os }}-${{ hashFiles(\"**/pnpm-lock.yaml\"") }}'
+
       - name: use node.js 20.x
         uses: actions/setup-node@v4
         with:
