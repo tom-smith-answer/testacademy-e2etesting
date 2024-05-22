@@ -9,36 +9,54 @@ beforeEach(() => {
 })
 
 describe("Clicking the favourite button causes it to become highlighted", () => {
-  it("Signed in user can click either favourite buttons and see them both highlighted", () => {
+  it("Signed in user can click top favourite button and see it highlighted", () => {
     //arrange - sign in and open first article
     cy.backendSignIn(enVar.login_email, enVar.login_password);
     cy.openArticle(0);
 
     //act - click the favourite button at the top of the page
     cy.clickFavouriteOrUnfavourite(0);
-    //assert - both favourite buttons have the css class indicating they are highlighted
-    cy.getByTestId("favourite-btn").should("have.class", "btn-primary");
 
-    //act - click the favourite button at the bottom of the page
-    cy.clickFavouriteOrUnfavourite(1);
     //assert - both favourite buttons have the css class indicating they are highlighted
     cy.getByTestId("favourite-btn").should("have.class", "btn-primary");
 
     cy.resetFavCount('favourite', 1)
   });
 
-  it("User cannot click to highlight either favourite button when not signed in", () => {
+  it("Signed in user can click bottom favourite button and see it highlighted", () => {
+    //arrange - sign in and open first article
+    cy.backendSignIn(enVar.login_email, enVar.login_password);
+    cy.openArticle(0);
+
+    //act - click the favourite button at the bottom of the page
+    cy.clickFavouriteOrUnfavourite(1);
+
+    //assert - both favourite buttons have the css class indicating they are highlighted
+    cy.getByTestId("favourite-btn").should("have.class", "btn-primary");
+
+    cy.resetFavCount('favourite', 1)
+  });
+
+  it("User cannot click to highlight top favourite button when not signed in", () => {
     //arrange - open first article
     cy.openArticle(0);
 
     //act - click the favourite button at the top of the page
     cy.getByTestId('favourite-btn').should('exist')
     cy.clickFavouriteOrUnfavourite(0);
+
     //assert - both favourite buttons have the css class indicating they are not highlighted
     cy.getByTestId("favourite-btn").should("have.class", "btn-outline-primary");
+  });
+
+  it.only("User cannot click to highlight bottom favourite button when not signed in", () => {
+    //arrange - open first article
+    cy.openArticle(0);
 
     //act - click the favourite button at the bottom of the page
+    cy.getByTestId('favourite-btn').should('exist')
     cy.clickFavouriteOrUnfavourite(1);
+
     //assert - both favourite buttons have the css class indicating they are not highlighted
     cy.getByTestId("favourite-btn").should("have.class", "btn-outline-primary");
   });
