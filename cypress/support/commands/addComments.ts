@@ -26,7 +26,7 @@ declare global {
 
 Cypress.Commands.add('openArticle', (articleNo: number) => {
     cy.get(`[data-test="article-title"]`).eq(articleNo).click()
-    cy.url().should('include', 'article')
+    cy.getByTestId('favourite-btn').should('exist')
 })
 
 Cypress.Commands.add('addComment', (comment: string) => {

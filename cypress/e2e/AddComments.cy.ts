@@ -8,7 +8,7 @@
     beforeEach(() => {
       cy.backendSignIn(enVar.login_email, enVar.login_password);
     });
-    it("Alphanumeric values are held in the input feild", () => {
+    it.only("Alphanumeric values are held in the input feild", () => {
       //arrange - sign in
 
       cy.url().should("eq", `${Cypress.config("baseUrl")}#/`);
