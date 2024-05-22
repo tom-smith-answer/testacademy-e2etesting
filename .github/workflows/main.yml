@@ -44,8 +44,7 @@ jobs:
       - name: Run build
         run: npm run build
 
-      - name: Run Applicatio
-      
+      - name: Run Application
         run: npm run dev
   
       - name: Run Cypress
