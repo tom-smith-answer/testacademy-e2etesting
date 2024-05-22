@@ -12,6 +12,7 @@ jobs:
 
     steps:
       name: cypress e2e tests
+      uses: cypress-io/github-action@v6
       env:
         CI: true
 
