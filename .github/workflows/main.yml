@@ -8,11 +8,12 @@ on:
 
 jobs:
   e2e_tests:
-    name: cypress e2e tests
-    env:
-      CI: true
-
     runs-on: ubuntu-latest
+
+    steps:
+      name: cypress e2e tests
+      env:
+        CI: true
 
 
   setup:
