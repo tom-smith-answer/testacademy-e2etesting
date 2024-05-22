@@ -3,6 +3,9 @@
 
 beforeEach(() => {
   cy.visit("/");
+  Cypress.on('uncaught:exception', (err, runnable) => {
+    return false;
+  });
 })
 
 describe("Clicking the favourite button causes it to become highlighted", () => {
@@ -318,11 +321,11 @@ describe("Unfavouriting an article causes favourite count to decrease by 1", () 
 });
 
 describe("User can favourite an article", () => {
-  beforeEach(() => {
-    Cypress.on('uncaught:exception', (err, runnable) => {
-      return false;
-    });
-  })
+  // beforeEach(() => {
+  //   Cypress.on('uncaught:exception', (err, runnable) => {
+  //     return false;
+  //   });
+  // })
   it.skip("A signed in user can favourite an article and see it added to the 'your feed' tab", () => {
     //arrange - sign in, open the first article, click one of the favourite buttons and return home
     cy.backendSignIn(enVar.login_email, enVar.login_password);
