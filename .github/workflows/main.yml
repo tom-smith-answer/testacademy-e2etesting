@@ -45,7 +45,7 @@ jobs:
         run: npm run build
 
       - name: Run Application
-        run: npm run dev
+        run: npm run dev & 
   
       - name: Run Cypress
         run: pnpm test:e2e:ci
