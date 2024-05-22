@@ -8,7 +8,7 @@ beforeEach(() => {
   });
 })
 
-describe.only("Clicking the favourite button causes it to become highlighted", () => {
+describe("Clicking the favourite button causes it to become highlighted", () => {
   it("Signed in user can click either favourite buttons and see them both highlighted", () => {
     //arrange - sign in and open first article
     cy.backendSignIn(enVar.login_email, enVar.login_password);
