@@ -37,8 +37,9 @@ jobs:
       - name: Install dependancies
         run: pnpm install --no-frozen-lockfile
 
-
+      - name: Run build
+        run: pnpm run build
+        
       - name: Run Cypress
         uses: cypress-io/github-action@v6
-        run: pnpm run dev
         run: npx cypress run
