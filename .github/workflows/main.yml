@@ -7,7 +7,7 @@ on:
       - Pipeline_Activity
 
 jobs:
-  setup:
+  run-cypress-tests:
     runs-on: ubuntu-latest
 
     steps:
