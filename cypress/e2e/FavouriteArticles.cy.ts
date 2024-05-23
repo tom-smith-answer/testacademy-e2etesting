@@ -15,7 +15,6 @@ describe("Clicking the favourite button causes it to become highlighted", () => 
     cy.openArticle(0);
 
     //act - click the favourite button at the top of the page
-    cy.getByTestId('favourite-btn').should('exist')
     cy.clickFavouriteOrUnfavourite(0);
 
     //assert - both favourite buttons have the css class indicating they are highlighted
@@ -30,7 +29,6 @@ describe("Clicking the favourite button causes it to become highlighted", () => 
     cy.openArticle(0);
 
     //act - click the favourite button at the bottom of the page
-    cy.getByTestId('favourite-btn').should('exist')
     cy.clickFavouriteOrUnfavourite(1);
 
     //assert - both favourite buttons have the css class indicating they are highlighted
@@ -44,7 +42,6 @@ describe("Clicking the favourite button causes it to become highlighted", () => 
     cy.openArticle(0);
 
     //act - click the favourite button at the top of the page
-    cy.getByTestId('favourite-btn').should('exist')
     cy.clickFavouriteOrUnfavourite(0);
 
     //assert - both favourite buttons have the css class indicating they are not highlighted
@@ -56,7 +53,6 @@ describe("Clicking the favourite button causes it to become highlighted", () => 
     cy.openArticle(0);
 
     //act - click the favourite button at the bottom of the page
-    cy.getByTestId('favourite-btn').should('exist')
     cy.clickFavouriteOrUnfavourite(1);
 
     //assert - both favourite buttons have the css class indicating they are not highlighted

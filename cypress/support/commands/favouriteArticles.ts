@@ -57,6 +57,7 @@ declare global {
 
 
 Cypress.Commands.add('clickFavouriteOrUnfavourite', (buttonNo: number) => {
+    cy.getByTestId('favourite-btn').should('exist')
     if (buttonNo === 0) {
         cy.getByTestId("favourite-btn").eq(0).click()
     }
