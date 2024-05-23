@@ -49,7 +49,7 @@ describe("Clicking the favourite button causes it to become highlighted", () => 
     cy.getByTestId("favourite-btn").should("have.class", "btn-outline-primary");
   });
 
-  it.only("User cannot click to highlight bottom favourite button when not signed in", () => {
+  it("User cannot click to highlight bottom favourite button when not signed in", () => {
     //arrange - open first article
     cy.openArticle(0);
 
