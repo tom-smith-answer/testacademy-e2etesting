@@ -51,6 +51,14 @@ declare global {
              */
             resetFavCount(state: string, countsToReset: number):
             Chainable<any>
+
+            /**
+             * Resets an article preview's heart count
+             * @param state String value indicating the current article state 'favourite' | 'unfavourite'
+             * @param countsToReset Number value indicating number of articles with counts to be reset
+             */
+            resetHeartCount(state: string, countsToReset: number):
+            Chainable<any>
         }
     }
 }
@@ -67,7 +75,7 @@ Cypress.Commands.add('clickFavouriteOrUnfavourite', (buttonNo: number) => {
 })
 
 Cypress.Commands.add('clickHeart', (heartNo: number) => {
-    cy.getByTestId('favourite-btn').eq(heartNo).click()
+    cy.getByTestId('heart-btn').eq(heartNo).click()
 })
 
 Cypress.Commands.add('getArticleFavCount', (buttonNo: number) => {
@@ -77,7 +85,7 @@ Cypress.Commands.add('getArticleFavCount', (buttonNo: number) => {
 })
 
 Cypress.Commands.add('getHeartFavCount', (buttonNo: number) => {
-    cy.getByTestId('favourite-btn').eq(buttonNo).invoke('text').then((text) => {
+    cy.getByTestId('heart-btn').eq(buttonNo).invoke('text').then((text) => {
         return Number(text.slice(1, text.length))
     })
 })
@@ -100,6 +108,19 @@ Cypress.Commands.add('resetFavCount', (state: string, countsToReset: number) => 
     else  {
         for (let i = 1; i <= countsToReset; i++) {
             cy.getByTestId('favourite-btn').eq(i - 1).click()
+        }
+    }
+})
+
+Cypress.Commands.add('resetHeartCount', (state: string, countsToReset: number) => {
+    if (state === 'favourite') {
+        for (let i = 1; i <= countsToReset; i++) {
+            cy.getByTestId('heart-btn').eq(i - 1).click().click()
+        }
+    }
+    else  {
+        for (let i = 1; i <= countsToReset; i++) {
+            cy.getByTestId('heart-btn').eq(i - 1).click()
         }
     }
 })

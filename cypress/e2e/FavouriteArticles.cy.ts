@@ -66,7 +66,7 @@ describe("Clicking the favourite button causes it to become highlighted", () => 
     //act - click the first heart button
     cy.clickHeart(0).should("have.class", "btn-primary"); //assert - button has the css class indicating it is highlighted
 
-    cy.resetFavCount('favourite', 1)
+    cy.resetHeartCount('favourite', 1)
   });
 
   it("User cannot click to highlight a heart button when not signed in", () => {
@@ -108,7 +108,7 @@ describe("Clicking the favourite button causes it to become highlighted", () => 
     cy.getByTestId("favourite-btn").should("have.css", "border-color").and("include", "rgb(92, 184, 92)");
     cy.getByTestId("favourite-btn").should("have.css", "color").and("include", "rgb(255, 255, 255)");
 
-    cy.resetFavCount('favourite', 1)
+    cy.resetHeartCount('favourite', 1)
   });
 
   it("Button text should match the favourite/unfavourite state", () => {
@@ -185,7 +185,7 @@ describe("User should unhighlight favourite button on clicking unfavourite", () 
 });
 
 describe("Favouriting an article causes the count to increase by 1", () => {
-  it("Signed in user can follow an article and see the count increase by 1", () => {
+  it("Signed in user can favourite an article and see the count increase by 1", () => {
     //arrange - sign in and open first article
     cy.backendSignIn(enVar.login_email, enVar.login_password);
     cy.openArticle(0);
@@ -238,11 +238,11 @@ describe("Favouriting an article causes the count to increase by 1", () => {
     cy.getHeartFavCount(0)
       .then((favCount) => {
         cy.clickHeart(0);
-        cy.getByTestId("favourite-btn").should("have.class", "btn-primary");
+        cy.getByTestId("heart-btn").should("have.class", "btn-primary");
         cy.getHeartFavCount(0).should("eq", favCount + 1); // assert - new count is 1 greater than the inital favourite count
       });
 
-      cy.resetFavCount('unfavourite', 1)
+      cy.resetHeartCount('unfavourite', 1)
   });
 
   it("user cannot increase favourite count by clicking heart when not signed in", () => {
@@ -267,7 +267,7 @@ describe("Favouriting an article causes the count to increase by 1", () => {
         .clickHeart(0)
         .clickHeart(0)
         .clickHeart(0);
-        cy.getByTestId("favourite-btn").eq(0).should("have.css", "background-color").and('include', 'rgba(0, 0, 0, 0)');
+        cy.getByTestId("heart-btn").eq(0).should("have.css", "background-color").and('include', 'rgba(0, 0, 0, 0)');
         cy.getHeartFavCount(0).should("eq", favCount); //assert - new count is not 4 greater than the inital favourite count
       });
   });
@@ -315,7 +315,7 @@ describe("Unfavouriting an article causes favourite count to decrease by 1", () 
       .then((favCount) => {
         console.log(favCount)
         cy.clickHeart(0)
-        cy.getByTestId('favourite-btn').should("have.css", "background-color").and("include", "rgba(0, 0, 0, 0)");
+        cy.getByTestId('heart-btn').should("have.css", "background-color").and("include", "rgba(0, 0, 0, 0)");
         cy.getHeartFavCount(0).should('eq', favCount - 1) //assert - favourite count is reduced by 1
       })
   })
@@ -338,11 +338,6 @@ describe("Unfavouriting an article causes favourite count to decrease by 1", () 
 });
 
 describe("User can favourite an article", () => {
-  // beforeEach(() => {
-  //   Cypress.on('uncaught:exception', (err, runnable) => {
-  //     return false;
-  //   });
-  // })
   it.skip("A signed in user can favourite an article and see it added to the 'your feed' tab", () => {
     //arrange - sign in, open the first article, click one of the favourite buttons and return home
     cy.backendSignIn(enVar.login_email, enVar.login_password);
@@ -403,7 +398,7 @@ describe("User can favourite an article", () => {
       cy.getByTestId(title).should('exist') //assert - article exits in the 'favourites' tab
     })
 
-    cy.resetFavCount('favourite', 1)
+    cy.resetHeartCount('favourite', 1)
   })
 
   it('User cannot add to their favourites when not signed in', () => {
@@ -487,7 +482,7 @@ describe("User can favourite multiple articles", () => {
       cy.getByTestId(title).should('exist'); //assert - article exists in favourites
     })      
 
-    cy.resetFavCount('favourite', 2)
+    cy.resetHeartCount('favourite', 2)
   })
 
   it('Signed in user can heart multiple articles and see them appear in their "favourite articles" tab', () => {
@@ -508,7 +503,7 @@ describe("User can favourite multiple articles", () => {
       cy.getByTestId(title).should('exist'); //assert - article exits in favourites
     })
 
-    cy.resetFavCount('favourite', 2)
+    cy.resetHeartCount('favourite', 2)
   })
 })
 
@@ -533,7 +528,7 @@ describe('Page elements should display persitance', () => {
     //arrange - sign in 
     //act - heart and open first article 
     cy.clickHeart(0)
-    cy.getByTestId('favourite-btn').should('have.class', 'btn-primary')
+    cy.getByTestId('heart-btn').should('have.class', 'btn-primary')
     cy.getHeartFavCount(0).then((favCount) => {
       cy.openArticle(0)
       cy.getArticleFavCount(0).should('eq', favCount) //assert - both favourite buttons display the correct count
