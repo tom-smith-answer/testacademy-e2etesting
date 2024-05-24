@@ -75,6 +75,7 @@ Cypress.Commands.add('clickFavouriteOrUnfavourite', (buttonNo: number) => {
 })
 
 Cypress.Commands.add('clickHeart', (heartNo: number) => {
+    cy.getByTestId('heart-btn').should('exist')
     cy.getByTestId('heart-btn').eq(heartNo).click()
 })
 
