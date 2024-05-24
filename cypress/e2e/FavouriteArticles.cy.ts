@@ -99,14 +99,14 @@ describe("Clicking the favourite button causes it to become highlighted", () => 
     cy.backendSignIn(enVar.login_email, enVar.login_password);
 
     //act - get heart buttons without clicking
-    cy.getByTestId("favourite-btn").should("have.css", "background-color").and("include", "rgba(0, 0, 0, 0)"); //assert - they have no background colour initally
-    cy.getByTestId("favourite-btn").should("have.css", "border-color").and("include", "rgb(92, 184, 92)");
-    cy.getByTestId("favourite-btn").should("have.css", "color").and("include", "rgb(92, 184, 92)");
+    cy.getByTestId("heart-btn").should("have.css", "background-color").and("include", "rgba(0, 0, 0, 0)"); //assert - they have no background colour initally
+    cy.getByTestId("heart-btn").should("have.css", "border-color").and("include", "rgb(92, 184, 92)");
+    cy.getByTestId("heart-btn").should("have.css", "color").and("include", "rgb(92, 184, 92)");
 
     //act - click the first heart button
     cy.clickHeart(0).should("have.css", "background-color").and("include", "rgb(92, 184, 92)"); //assert - it has the correct background colour
-    cy.getByTestId("favourite-btn").should("have.css", "border-color").and("include", "rgb(92, 184, 92)");
-    cy.getByTestId("favourite-btn").should("have.css", "color").and("include", "rgb(255, 255, 255)");
+    cy.getByTestId("heart-btn").should("have.css", "border-color").and("include", "rgb(92, 184, 92)");
+    cy.getByTestId("heart-btn").should("have.css", "color").and("include", "rgb(255, 255, 255)");
 
     cy.resetHeartCount('favourite', 1)
   });
@@ -178,7 +178,7 @@ describe("User should unhighlight favourite button on clicking unfavourite", () 
   it("User cannot unheart an article they have not favourited", () => {
     //arrange - sign in
     //act - get first heart without clicking to favourite
-    cy.getByTestId("favourite-btn")
+    cy.getByTestId("heart-btn")
       .eq(0)
       .should("have.class", "btn-outline-primary"); //assert - button has the unfavourited class by default
   });
@@ -333,7 +333,7 @@ describe("Unfavouriting an article causes favourite count to decrease by 1", () 
       cy.clickHeart(0).should('have.class', 'btn-outline-primary')
       cy.getHeartFavCount(0).should('eq', favCount) //assert - favourite count is unchanged
     })
-    cy.resetFavCount('unfavourite', 1)
+    cy.resetHeartCount('unfavourite', 1)
   })
 });
 
