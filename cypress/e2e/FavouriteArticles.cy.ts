@@ -8,7 +8,12 @@ beforeEach(() => {
   });
 })
 
-describe.only("Clicking the favourite button causes it to become highlighted", () => {
+afterEach(() => {
+  cy.wait(1000);
+});
+
+describe("Favourite Articles", () => {
+describe("Clicking the favourite button causes it to become highlighted", () => {
   it("Signed in user can click top favourite button and see it highlighted", () => {
     //arrange - sign in and open first article
     cy.backendSignIn(enVar.login_email, enVar.login_password);
@@ -539,4 +544,4 @@ describe('Page elements should display persitance', () => {
   })
 })
 
-}
+})};
