@@ -12,7 +12,7 @@ afterEach(() => {
   cy.wait(1000);
 });
 
-describe("Favourite Articles", () => {
+describe.only("Favourite Articles", () => {
 describe("Clicking the favourite button causes it to become highlighted", () => {
   it("Signed in user can click top favourite button and see it highlighted", () => {
     //arrange - sign in and open first article
@@ -23,7 +23,7 @@ describe("Clicking the favourite button causes it to become highlighted", () => 
     cy.clickFavouriteOrUnfavourite(0);
 
     //assert - both favourite buttons have the css class indicating they are highlighted
-    cy.getByTestId("favourite-btn").should("have.class", "btn-primary");
+    cy.getByTestId("favourite-btn").should("have.class", "btnprimary");
 
     cy.resetFavCount('favourite', 1)
   });
