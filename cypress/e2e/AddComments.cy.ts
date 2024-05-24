@@ -4,7 +4,7 @@
   beforeEach(() => {
     cy.visit("/");
   });
-  describe.only("Comment feild can accept alphanumeric values", () => {
+  describe("Comment feild can accept alphanumeric values", () => {
     beforeEach(() => {
       cy.backendSignIn(enVar.login_email, enVar.login_password);
     });
