@@ -526,7 +526,7 @@ describe('Page elements should display persitance', () => {
     cy.getByTestId('favourite-btn').should('have.css', 'border-color').and("include", "rgb(92, 184, 92)")
     cy.getByTestId('favourite-btn').should('have.css', 'color').and("include", "rgb(255, 255, 255)")
 
-    cy.resetFavCount('favourite', 1)
+    cy.resetFavCount('unfavourite', 1)
   })
 
   it('Favourite count should persist between pages', () => {
