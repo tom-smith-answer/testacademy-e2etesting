@@ -1,0 +1,36 @@
+name: Cypress Tests
+
+on:
+  push:
+    branches:
+      - main
+      - Pipeline_Activity
+      - Pipeline-no-reporting
+
+  workflow_dispatch:
+
+jobs:
+  run-cypress-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: pnpm setup
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+          run_install: false
+
+      - name: Install dependancies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Run build
+        run: npm run build
+
+      - name: Run Application
+        run: npm run dev & 
+  
+      - name: Run Cypress
+        run: pnpm cypress run

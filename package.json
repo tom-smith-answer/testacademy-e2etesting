@@ -4,7 +4,6 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "prepare": "simple-git-hooks",
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview --port 4137",

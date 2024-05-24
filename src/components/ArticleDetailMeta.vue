@@ -12,6 +12,7 @@
         name="profile"
         :params="{ username: article.author.username }"
         class="author"
+        data-test="article-author"
       >
         {{ article.author.username }}
       </AppLink>
@@ -23,6 +24,7 @@
       v-if="displayFollowButton"
       :aria-label="article.author.following ? 'Unfollow' : 'Follow'"
       class="btn btn-sm btn-outline-secondary space"
+      data-test="follow-btn"
       :disabled="followProcessGoing"
       @click="toggleFollow"
     >
