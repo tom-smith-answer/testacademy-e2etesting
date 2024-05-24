@@ -65,6 +65,7 @@ declare global {
 
 
 Cypress.Commands.add('clickFavouriteOrUnfavourite', (buttonNo: number) => {
+    cy.wait(2000)
     cy.getByTestId('favourite-btn').should('exist')
     if (buttonNo === 0) {
         cy.getByTestId("favourite-btn").eq(0).click()
@@ -75,6 +76,7 @@ Cypress.Commands.add('clickFavouriteOrUnfavourite', (buttonNo: number) => {
 })
 
 Cypress.Commands.add('clickHeart', (heartNo: number) => {
+    cy.wait(2000)
     cy.getByTestId('heart-btn').should('exist')
     cy.getByTestId('heart-btn').eq(heartNo).click()
 })
