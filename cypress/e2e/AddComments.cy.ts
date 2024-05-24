@@ -4,11 +4,11 @@
   beforeEach(() => {
     cy.visit("/");
   });
-  describe("Comment feild can accept alphanumeric values", () => {
+  describe("Comment field can accept alphanumeric values", () => {
     beforeEach(() => {
       cy.backendSignIn(enVar.login_email, enVar.login_password);
     });
-    it("Alphanumeric values are held in the input feild", () => {
+    it("Alphanumeric values are held in the input field", () => {
       //arrange - sign in
 
       cy.url().should("eq", `${Cypress.config("baseUrl")}#/`);
@@ -163,7 +163,7 @@
     beforeEach(() => {
       cy.backendSignIn(enVar.login_email, enVar.login_password);
     });
-    it("Comment feild clears after posting a comment", () => {
+    it("Comment field clears after posting a comment", () => {
       //arrange - sign in and open first article
       cy.openArticle(0);
 
