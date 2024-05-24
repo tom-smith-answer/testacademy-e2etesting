@@ -4,6 +4,9 @@
   beforeEach(() => {
     cy.visit("/");
   });
+
+  describe('Add comments', () => {
+
   describe("Comment field can accept alphanumeric values", () => {
     beforeEach(() => {
       cy.backendSignIn(enVar.login_email, enVar.login_password);
@@ -226,4 +229,6 @@
       ).should("exist");
     });
   });
-}
+
+})
+};
