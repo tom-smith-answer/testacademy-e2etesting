@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      - Pipeline_Activity
+      - cypress-screenshots
 
   workflow_dispatch:
 
