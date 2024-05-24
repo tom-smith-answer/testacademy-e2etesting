@@ -129,7 +129,7 @@ describe.only("Clicking the favourite button causes it to become highlighted", (
   });
 });
 
-describe("User should unhighlight favourite button on clicking unfavourite", () => {
+describe.only("User should unhighlight favourite button on clicking unfavourite", () => {
   beforeEach(() => {
     cy.backendSignIn(enVar.login_email, enVar.login_password);
   })
