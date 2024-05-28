@@ -8,7 +8,7 @@ beforeEach(() => {
   });
 })
 
-describe("Favourite Articles", () => {
+describe("Favorite Articles", () => {
 describe("Highlight", () => {
   it("Signed in user can click top favourite button and see it highlighted", () => {
     //arrange - sign in and open first article
