@@ -212,7 +212,7 @@ describe("Increase count", () => {
   it.only("user cannot alter favourite count when not signed in", () => {
     //arrange - open first article
     cy.getArticleTitle(0).then((articleTitle) => {
-      cy.openArticle(0)
+      cy.openArticle(0).getArticleFavCount(0)
       //act - save the initial favourite count and then click one of the favourite buttons
         .then((favCount) => {
           cy.clickFavouriteOrUnfavourite(0);
