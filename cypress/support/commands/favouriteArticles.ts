@@ -67,12 +67,14 @@ declare global {
 Cypress.Commands.add('clickFavouriteOrUnfavourite', (buttonNo: number) => {
     cy.getByTestId('article-author').should('exist')
     cy.getByTestId('favourite-btn').should('exist')
-    if (buttonNo === 0) {
-        cy.getByTestId("favourite-btn").eq(0).click()
-    }
-    if (buttonNo === 1) {
-        cy.getByTestId("favourite-btn").eq(1).click()
-    }
+    .then(() => {
+        if (buttonNo === 0) {
+            cy.getByTestId("favourite-btn").eq(0).click()
+        }
+        if (buttonNo === 1) {
+            cy.getByTestId("favourite-btn").eq(1).click()
+        }
+    })
 })
 
 Cypress.Commands.add('clickHeart', (heartNo: number) => {
