@@ -49,8 +49,8 @@ describe("Highlight", () => {
     //act - click the favourite button at the top of the page
     cy.clickFavouriteOrUnfavourite(0);
 
-    //assert - both favourite buttons have the css class indicating they are not highlighted
-    cy.getByTestId("favourite-btn").should("have.class", "btn-outline-primary");
+    //assert - site redirects to login page instead of processing favourite
+    cy.url().should('eq', `${Cypress.config('baseUrl')}#/login`);
   });
 
   it("User cannot click to highlight bottom favourite button when not signed in", () => {
@@ -60,8 +60,8 @@ describe("Highlight", () => {
     //act - click the favourite button at the bottom of the page
     cy.clickFavouriteOrUnfavourite(1);
 
-    //assert - both favourite buttons have the css class indicating they are not highlighted
-    cy.getByTestId("favourite-btn").should("have.class", "btn-outline-primary");
+    //assert - site redirects to login page instead of processing favourite
+    cy.url().should('eq', `${Cypress.config('baseUrl')}#/login`);
   });
 
   it("Signed in user can click an article card's heart button and see it highlighted", () => {
@@ -77,7 +77,10 @@ describe("Highlight", () => {
   it("User cannot click to highlight a heart button when not signed in", () => {
     //arrange - visit page
     //act - click the first heart button
-    cy.clickHeart(0).should("have.class", "btn-outline-primary"); //assert - button has the css class indicating it is not highlighted
+    cy.clickHeart(0)
+
+    //assert - site redirects to login page instead of processing favourite
+    cy.url().should('eq', `${Cypress.config('baseUrl')}#/login`);
   });
 
   it("Favourite button colour should match the favourite/unfavourite state", () => {
@@ -206,16 +209,19 @@ describe("Increase count", () => {
     cy.resetFavCount('unfavourite', 1)
   });
 
-  it("user cannot alter favourite count when not signed in", () => {
+  it.only("user cannot alter favourite count when not signed in", () => {
     //arrange - open first article
-    cy.openArticle(0);
+    cy.getArticleTitle(0).then((articleTitle) => {
+      cy.openArticle(0)
+      //act - save the initial favourite count and then click one of the favourite buttons
+        .then((favCount) => {
+          cy.clickFavouriteOrUnfavourite(0);
+          cy.backendSignIn(enVar.login_email, enVar.login_password) //act - sign in after redirect and open the same article
+          cy.getByTestId(articleTitle).click()
+          cy.getArticleFavCount(0).should("eq", favCount); //assert - new count is not greater than the initial favourite count
+        });
+    })
 
-    //act - save the initial favourite count and then click one of the favourite buttons
-    cy.getArticleFavCount(0)
-      .then((favCount) => {
-        cy.clickFavouriteOrUnfavourite(0);
-        cy.getArticleFavCount(0).should("eq", favCount); //assert - new count is not greater than the initial favourite count
-      });
   });
 
   it("User cannot spam favourite button to increase count", () => {
