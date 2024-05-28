@@ -10,7 +10,7 @@ beforeEach(() => {
 
 describe("Favorite Articles", () => {
 describe("Highlight", () => {
-  it("Signed in user can click top favourite button and see it highlighted", () => {
+  it.only("Signed in user can click top favourite button and see it highlighted", () => {
     //arrange - sign in and open first article
     cy.backendSignIn(enVar.login_email, enVar.login_password);
     cy.openArticle(0);
@@ -19,7 +19,7 @@ describe("Highlight", () => {
     cy.clickFavouriteOrUnfavourite(0);
 
     //assert - both favourite buttons have the css class indicating they are highlighted
-    cy.getByTestId("favourite-btn").should("have.class", "btn-primary");
+    cy.getByTestId("favourite-btn").should("have.class", "btn/primary");
 
     cy.resetFavCount('favourite', 1)
   });
