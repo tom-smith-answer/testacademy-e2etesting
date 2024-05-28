@@ -13,7 +13,7 @@ afterEach(() => {
 });
 
 describe.only("Favourite Articles", () => {
-describe("Clicking the favourite button causes it to become highlighted", () => {
+describe("Highlight", () => {
   it("Signed in user can click top favourite button and see it highlighted", () => {
     //arrange - sign in and open first article
     cy.backendSignIn(enVar.login_email, enVar.login_password);
@@ -134,7 +134,7 @@ describe("Clicking the favourite button causes it to become highlighted", () => 
   });
 });
 
-describe("User should unhighlight favourite button on clicking unfavourite", () => {
+describe("Unhighlight", () => {
   beforeEach(() => {
     cy.backendSignIn(enVar.login_email, enVar.login_password);
   })
@@ -189,7 +189,7 @@ describe("User should unhighlight favourite button on clicking unfavourite", () 
   });
 });
 
-describe("Favouriting an article causes the count to increase by 1", () => {
+describe("Increase count", () => {
   it("Signed in user can favourite an article and see the count increase by 1", () => {
     //arrange - sign in and open first article
     cy.backendSignIn(enVar.login_email, enVar.login_password);
@@ -278,7 +278,7 @@ describe("Favouriting an article causes the count to increase by 1", () => {
   });
 });
 
-describe("Unfavouriting an article causes favourite count to decrease by 1", () => {
+describe("Decrease count", () => {
   beforeEach(() => {
     cy.backendSignIn(enVar.login_email, enVar.login_password);
   })
@@ -342,7 +342,7 @@ describe("Unfavouriting an article causes favourite count to decrease by 1", () 
   })
 });
 
-describe("User can favourite an article", () => {
+describe("Favourite", () => {
   it.skip("A signed in user can favourite an article and see it added to the 'your feed' tab", () => {
     //arrange - sign in, open the first article, click one of the favourite buttons and return home
     cy.backendSignIn(enVar.login_email, enVar.login_password);
@@ -438,7 +438,7 @@ describe("User can favourite an article", () => {
   })
 })
 
-describe("User can favourite multiple articles", () => {
+describe("Favourite multiple", () => {
   beforeEach(() => {
     cy.backendSignIn(enVar.login_email, enVar.login_password);
   })
@@ -512,7 +512,7 @@ describe("User can favourite multiple articles", () => {
   })
 })
 
-describe('Page elements should display persitance', () => {
+describe('Persitance', () => {
   beforeEach(() => {
     cy.backendSignIn(enVar.login_email, enVar.login_password);
   })
