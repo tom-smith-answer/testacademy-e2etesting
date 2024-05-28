@@ -37,7 +37,7 @@ describe("Clicking the favourite button causes it to become highlighted", () => 
     cy.clickFavouriteOrUnfavourite(1);
 
     //assert - both favourite buttons have the css class indicating they are highlighted
-    cy.getByTestId("favourite-btn").should("have.class", "btn-primary");
+    cy.getByTestId("favourite-btn").should("have.class", "btn/primary");
 
     cy.resetFavCount('favourite', 1)
   });
