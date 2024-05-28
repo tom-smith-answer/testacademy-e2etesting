@@ -8,10 +8,6 @@ beforeEach(() => {
   });
 })
 
-afterEach(() => {
-  cy.wait(1000);
-});
-
 describe("Favourite Articles", () => {
 describe("Highlight", () => {
   it("Signed in user can click top favourite button and see it highlighted", () => {
@@ -144,7 +140,7 @@ describe("Unhighlight", () => {
   beforeEach(() => {
     cy.backendSignIn(enVar.login_email, enVar.login_password);
   })
-  it("Signed in user can click either unfavourite button to unhighlight a favourited article", () => {
+  it("Signed in user can click top unfavourite button to unhighlight a favourited article", () => {
     //arrange - sign in, open and favourite first article
     cy.openArticle(0);
     cy.clickFavouriteOrUnfavourite(0);
@@ -154,14 +150,18 @@ describe("Unhighlight", () => {
       cy.getByTestId("favourite-btn").should("have.class", "btn-outline-primary"); //assert - both buttons have the css class indicating it is not highlighted
     });
 
-    //arrange - favourite the article
+    cy.resetFavCount('unfavourite', 1)
+  });
+
+  it("Signed in user can click bottom unfavourite button to unhighlight a favourited article", () => {
+    //arrange - sign in, open and favourite first article
+    cy.openArticle(0);
     cy.clickFavouriteOrUnfavourite(0);
 
     //act - click unfavourite button at the bottom of the page
     cy.clickFavouriteOrUnfavourite(1).then(() => {
       cy.getByTestId("favourite-btn").should("have.class", "btn-outline-primary"); //assert - both buttons have the css class indicating it is not highlighted
     });
-
     cy.resetFavCount('unfavourite', 1)
   });
 
@@ -265,11 +265,16 @@ describe("Increase count", () => {
   it("user cannot increase favourite count by clicking heart when not signed in", () => {
     //arrange - visit the page without signing in
     //act - save initial favourite count and click the first heart button
-    cy.getHeartFavCount(0)
-      .then((favCount) => {
-        cy.clickHeart(0);
-        cy.getHeartFavCount(0).should("eq", favCount); //assert - new count is not greater than the initial favourite count
-      });
+    cy.getArticleTitle(0).then((articleTitle) => {
+      cy.getHeartFavCount(0)
+        .then((favCount) => {
+          cy.clickHeart(0);
+          cy.backendSignIn(enVar.login_email, enVar.login_password) //act - sign in after redirect and open the same article
+          cy.url().should('not.include', 'login')
+          cy.getByTestId(articleTitle).click()
+          cy.getArticleFavCount(0).should("eq", favCount); //assert - new count is not greater than the initial favourite count
+        });
+    })
   });
 
   it("User cannot spam heart button to increase the count", () => {
