@@ -7,13 +7,6 @@ export default defineConfig({
     defaultCommandTimeout: 10000, 
     setupNodeEvents(on, config) {
       // implement node event listeners here
-    on('after:screenshot', (details) => {
-      const newName = `${details.name}/${details.takenAt}`
-      rename(details.name, newName, (err) => {
-        if (err) throw err;
-        console.log('Rename complete!');
-      });
-    })
     },
     baseUrl: 'http://localhost:5173/'
   },
