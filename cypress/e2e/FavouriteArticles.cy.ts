@@ -12,7 +12,7 @@ afterEach(() => {
   cy.wait(1000);
 });
 
-describe.only("Favourite Articles", () => {
+describe("Favourite Articles", () => {
 describe("Highlight", () => {
   it("Signed in user can click top favourite button and see it highlighted", () => {
     //arrange - sign in and open first article
@@ -44,24 +44,26 @@ describe("Highlight", () => {
 
   it("User cannot click to highlight top favourite button when not signed in", () => {
     //arrange - open first article
-    cy.openArticle(0);
-
-    //act - click the favourite button at the top of the page
-    cy.clickFavouriteOrUnfavourite(0);
-
-    //assert - site redirects to login page instead of processing favourite
-    cy.url().should('eq', `${Cypress.config('baseUrl')}#/login`);
+    cy.getArticleTitle(0).then((articleTitle) => {
+      cy.openArticle(0)
+          //act - click the favourite button at the top of the page
+          cy.clickFavouriteOrUnfavourite(0);
+          cy.backendSignIn(enVar.login_email, enVar.login_password) //act - sign in after redirect and open the same article
+          cy.getByTestId(articleTitle).click()
+          cy.getByTestId('favourite-btn').should('have.class', 'btn-outline-primary'); //assert - both favourite buttons should have class indicating not highlighted
+    })
   });
 
   it("User cannot click to highlight bottom favourite button when not signed in", () => {
     //arrange - open first article
-    cy.openArticle(0);
-
-    //act - click the favourite button at the bottom of the page
-    cy.clickFavouriteOrUnfavourite(1);
-
-    //assert - site redirects to login page instead of processing favourite
-    cy.url().should('eq', `${Cypress.config('baseUrl')}#/login`);
+    cy.getArticleTitle(0).then((articleTitle) => {
+      cy.openArticle(0)
+          //act - click the favourite button at the bottom of the page
+          cy.clickFavouriteOrUnfavourite(1);
+          cy.backendSignIn(enVar.login_email, enVar.login_password) //act - sign in after redirect and open the same article
+          cy.getByTestId(articleTitle).click()
+          cy.getByTestId('favourite-btn').should('have.class', 'btn-outline-primary'); //assert - both favourite buttons should have class indicating not highlighted
+    })
   });
 
   it("Signed in user can click an article card's heart button and see it highlighted", () => {
@@ -77,10 +79,11 @@ describe("Highlight", () => {
   it("User cannot click to highlight a heart button when not signed in", () => {
     //arrange - visit page
     //act - click the first heart button
-    cy.clickHeart(0)
+    cy.clickHeart(0);
 
-    //assert - site redirects to login page instead of processing favourite
-    cy.url().should('eq', `${Cypress.config('baseUrl')}#/login`);
+    cy.backendSignIn(enVar.login_email, enVar.login_password); //act - sign in after redirect
+
+    cy.getByTestId('heart-btn').should('have.class', 'btn-outline-primary'); //assert - no heart buttons should have class indicating they are highlighted 
   });
 
   it("Favourite button colour should match the favourite/unfavourite state", () => {
@@ -209,7 +212,7 @@ describe("Increase count", () => {
     cy.resetFavCount('unfavourite', 1)
   });
 
-  it.only("user cannot alter favourite count when not signed in", () => {
+  it("user cannot alter favourite count when not signed in", () => {
     //arrange - open first article
     cy.getArticleTitle(0).then((articleTitle) => {
       cy.openArticle(0).getArticleFavCount(0)
@@ -549,5 +552,4 @@ describe('Persitance', () => {
     cy.resetFavCount('favourite', 1)
   })
 })
-
 })};
