@@ -4,7 +4,7 @@ import { rename } from 'node:fs';
 export default defineConfig({
 
   e2e: {
-    defaultCommandTimeout: 10000, 
+    defaultCommandTimeout: 4000, 
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
