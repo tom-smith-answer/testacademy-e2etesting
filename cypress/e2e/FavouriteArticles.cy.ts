@@ -150,15 +150,17 @@ describe("Unhighlight", () => {
     cy.clickFavouriteOrUnfavourite(0);
 
     //act - click unfavourite button at the top of the page
-    cy.clickFavouriteOrUnfavourite(0);
-    cy.getByTestId("favourite-btn").should("have.class", "btn-outline-primary"); //assert - both buttons have the css class indicating it is not highlighted
+    cy.clickFavouriteOrUnfavourite(0).then(() => {
+      cy.getByTestId("favourite-btn").should("have.class", "btn-outline-primary"); //assert - both buttons have the css class indicating it is not highlighted
+    });
 
     //arrange - favourite the article
     cy.clickFavouriteOrUnfavourite(0);
 
     //act - click unfavourite button at the bottom of the page
-    cy.clickFavouriteOrUnfavourite(1);
-    cy.getByTestId("favourite-btn").should("have.class", "btn-outline-primary"); //assert - both buttons have the css class indicating it is not highlighted
+    cy.clickFavouriteOrUnfavourite(1).then(() => {
+      cy.getByTestId("favourite-btn").should("have.class", "btn-outline-primary"); //assert - both buttons have the css class indicating it is not highlighted
+    });
 
     cy.resetFavCount('unfavourite', 1)
   });
@@ -220,6 +222,7 @@ describe("Increase count", () => {
         .then((favCount) => {
           cy.clickFavouriteOrUnfavourite(0);
           cy.backendSignIn(enVar.login_email, enVar.login_password) //act - sign in after redirect and open the same article
+          cy.url().should('not.include', 'login')
           cy.getByTestId(articleTitle).click()
           cy.getArticleFavCount(0).should("eq", favCount); //assert - new count is not greater than the initial favourite count
         });
